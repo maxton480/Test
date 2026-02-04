@@ -1,74 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Same head as above, title: Taxi Booking – TravelEase -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Taxi Booking – TravelEase</title>
-  <!-- ... fonts and <link rel="stylesheet" href="style.css"> ... -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #0f172a;
+      --muted: #475569;
+      --light: #f8fafc;
+      --shadow: 0 8px 25px rgba(0,0,0,0.08);
+      --radius: 16px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; color:var(--text); background:#fff; line-height:1.6; }
+    .container { max-width:1200px; margin:0 auto; padding:0 20px; }
+    header { position:fixed; top:0; left:0; right:0; background:white; box-shadow:0 2px 10px rgba(0,0,0,0.06); z-index:1000; }
+    nav { display:flex; justify-content:space-between; align-items:center; padding:16px 0; }
+    .logo { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:800; color:var(--primary); text-decoration:none; }
+    .nav-links { display:flex; gap:28px; list-style:none; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-weight:500; transition:color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--primary); }
+    .btn { padding:8px 20px; border-radius:50px; font-weight:600; text-decoration:none; font-size:0.95rem; transition:all 0.3s; }
+    .btn-primary { background:var(--primary); color:white; }
+    .btn-primary:hover { background:var(--primary-dark); transform:translateY(-2px); }
+    .hero { padding:140px 0 100px; text-align:center; background:linear-gradient(rgba(255,255,255,0.9),rgba(255,255,255,0.9)), url('https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover no-repeat; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.8rem); margin-bottom:0.8rem; }
+    .hero p { font-size:1.25rem; max-width:680px; margin:0 auto 2rem; color:var(--muted); }
+    .search-box { background:white; border-radius:16px; padding:32px; box-shadow:var(--shadow); max-width:900px; margin:0 auto; }
+    .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+    input, select { padding:14px 18px; border:1px solid #d1d5db; border-radius:12px; font-size:1rem; }
+    .btn-search { grid-column:1/-1; padding:16px; font-size:1.15rem; }
+    .section { padding:90px 0; background:var(--light); }
+    .section-title { text-align:center; font-family:'Playfair Display',serif; font-size:2.6rem; margin-bottom:3rem; }
+    .grid-4 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; }
+    .card { background:white; border-radius:16px; overflow:hidden; box-shadow:var(--shadow); transition:transform 0.4s; }
+    .card:hover { transform:translateY(-10px); }
+    .card-img { height:200px; background-size:cover; background-position:center; }
+    .card-body { padding:24px; text-align:center; }
+    .cta-banner { background:var(--primary); color:white; text-align:center; padding:80px 20px; }
+    footer { background:#0f172a; color:#cbd5e1; padding:60px 0 30px; text-align:center; }
+    @media (max-width:768px) { .nav-links { display:none; } .hero { padding:110px 0 80px; } }
+  </style>
 </head>
 <body>
 
-  <!-- Header with active on Taxi Booking -->
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo">TravelEase</a>
+      <ul class="nav-links">
+        <li><a href="airport-transfer.html">Airport Transfer</a></li>
+        <li><a href="taxi-booking.html" class="active">Taxi Booking</a></li>
+        <li><a href="train-booking.html">Train Booking</a></li>
+        <li><a href="visa-services.html">Visa Services</a></li>
+      </ul>
+      <a href="tel:+919914610704" class="btn btn-primary">Book Now</a>
+    </nav>
+  </div>
+</header>
 
-  <section class="hero" style="background: var(--gradient-hero) url('https://images.unsplash.com/photo-1502489597346-d8389a1f21f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat; background-blend-mode: overlay; background-color: rgba(255,255,255,0.85);">
-    <div class="container">
-      <h1>Taxi & Cab Booking</h1>
-      <p>Local city rides, outstation journeys, hourly packages — safe, comfortable, GPS-tracked vehicles at best rates.</p>
+<section class="hero">
+  <div class="container">
+    <h1>Taxi & Cab Booking</h1>
+    <p>Local rides, outstation journeys, hourly packages — safe, comfortable, GPS-tracked vehicles at best rates.</p>
 
-      <div class="search-box">
-        <h3 style="text-align:center; margin-bottom:2rem; font-size:1.8rem;">Book Your Taxi</h3>
-        <div class="form-grid">
-          <input type="text" placeholder="Pickup Location">
-          <input type="text" placeholder="Drop Location">
-          <select>
-            <option>Trip Type</option>
-            <option>Local Ride</option>
-            <option>Outstation Trip</option>
-            <option>Hourly Package</option>
-          </select>
-          <input type="datetime-local" placeholder="Pickup Date & Time">
-          <a href="tel:+919914610704" class="btn btn-primary btn-search">Book Now</a>
+    <div class="search-box">
+      <h3 style="text-align:center; margin-bottom:2rem; font-size:1.8rem;">Book Your Cab Now</h3>
+      <div class="form-grid">
+        <input type="text" placeholder="Pickup Location">
+        <input type="text" placeholder="Drop Location">
+        <select>
+          <option selected disabled>Trip Type</option>
+          <option>Local Ride (within city)</option>
+          <option>Outstation Trip</option>
+          <option>Hourly Package</option>
+          <option>Airport Transfer</option>
+        </select>
+        <input type="datetime-local" placeholder="Pickup Date & Time">
+        <a href="tel:+919914610704" class="btn btn-primary btn-search">Book Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Our Taxi Services</h2>
+    <div class="grid-4">
+      <div class="card">
+        <div class="card-img" style="background-image:url('https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+        <div class="card-body">
+          <h3>Local City Rides</h3>
+          <p>Quick & affordable travel within Ludhiana or any city.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img" style="background-image:url('https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+        <div class="card-body">
+          <h3>Outstation Journeys</h3>
+          <p>Comfortable intercity travel – tolls included in fixed fare.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img" style="background-image:url('https://images.pexels.com/photos/3769981/pexels-photo-3769981.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+        <div class="card-body">
+          <h3>Hourly Packages</h3>
+          <p>Shopping, events, sightseeing – flexible hours with driver.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img" style="background-image:url('https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+        <div class="card-body">
+          <h3>Safe & Verified Drivers</h3>
+          <p>GPS tracking, sanitized cars, women drivers available.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Our Taxi Services</h2>
-      <div class="grid-4">
-        <div class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
-          <div class="card-body">
-            <h3>Local City Rides</h3>
-            <p>Fast, affordable within-city travel — one-way or round trip options.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1502489597346-d8389a1f21f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
-          <div class="card-body">
-            <h3>Outstation Journeys</h3>
-            <p>Intercity trips (Delhi, Chandigarh, etc.) — tolls included in fixed fare.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1617814088056-3d6a0d9f2d4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
-          <div class="card-body">
-            <h3>Hourly Packages</h3>
-            <p>Shopping, events, sightseeing — flexible hours with dedicated driver.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1567808291548-fc3ee04dbcf0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
-          <div class="card-body">
-            <h3>Safe & Verified Drivers</h3>
-            <p>GPS tracking, verified profiles, sanitized cars — women drivers available.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="cta-banner">
+  <div class="container">
+    <h2>Need a Cab Right Now?</h2>
+    <p style="font-size:1.3rem; max-width:700px; margin:0 auto 2rem; opacity:0.9;">
+      Instant booking, priority service – one call away
+    </p>
+    <a href="tel:+919914610704" class="btn btn-primary" style="font-size:1.3rem; padding:16px 40px;">
+      Book Now
+    </a>
+  </div>
+</section>
 
-  <!-- CTA banner + footer same as airport page -->
+<footer>
+  <div class="container">
+    <p>TravelEase • Ludhiana, Punjab • Your Trusted Travel Partner</p>
+    <p style="margin-top:1.5rem; font-size:0.9rem; opacity:0.7;">
+      © 2026 TravelEase – All rights reserved
+    </p>
+  </div>
+</footer>
 
 </body>
 </html>
