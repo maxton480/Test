@@ -8,235 +8,47 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* Yeh pura style copy kar lo – chhota button, clean look */
     :root {
       --primary: #2563eb;
       --primary-dark: #1d4ed8;
       --text: #0f172a;
       --text-muted: #475569;
-      --bg: #ffffff;
       --light: #f8fafc;
-      --border: #e2e8f0;
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      --radius: 16px;
+      --shadow: 0 8px 25px rgba(0,0,0,0.08);
     }
-
     * { margin:0; padding:0; box-sizing:border-box; }
-
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
-    }
-
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-      z-index: 1000;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 0;
-    }
-
-    .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.3rem;
-      font-weight: 800;
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--primary);
-    }
-
-    .btn {
-      padding: 8px 20px;
-      border-radius: 50px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s;
-      font-size: 0.95rem;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-    }
-
-    .hero {
-      padding: 140px 0 100px;
-      text-align: center;
-      background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
-                  url('https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover no-repeat;
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.8rem, 8vw, 5rem);
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.3rem;
-      max-width: 700px;
-      margin: 0 auto 2.5rem;
-      color: var(--text-muted);
-    }
-
-    .search-box {
-      background: white;
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: var(--shadow);
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    .tab {
-      padding: 10px 24px;
-      border-radius: 50px;
-      background: var(--light);
-      color: var(--text-muted);
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .tab.active,
-    .tab:hover {
-      background: var(--primary);
-      color: white;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    input, select {
-      padding: 14px 18px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 1rem;
-    }
-
-    .btn-search {
-      grid-column: 1 / -1;
-      padding: 16px;
-      font-size: 1.15rem;
-    }
-
-    .section {
-      padding: 100px 0;
-      background: var(--light);
-    }
-
-    .section-title {
-      text-align: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-    }
-
-    .card {
-      background: white;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: transform 0.4s, box-shadow 0.4s;
-    }
-
-    .card:hover {
-      transform: translateY(-12px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
-    }
-
-    .card-img {
-      height: 200px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .card-body {
-      padding: 24px;
-      text-align: center;
-    }
-
-    .card h3 {
-      font-size: 1.45rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .card p {
-      color: var(--text-muted);
-    }
-
-    .cta-banner {
-      background: var(--primary);
-      color: white;
-      text-align: center;
-      padding: 90px 20px;
-    }
-
-    .cta-banner h2 {
-      font-size: 3rem;
-      margin-bottom: 1.5rem;
-    }
-
-    footer {
-      background: #0f172a;
-      color: #cbd5e1;
-      padding: 70px 0 40px;
-      text-align: center;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero { padding: 120px 0 80px; }
-    }
+    body { font-family:'Inter',sans-serif; color:var(--text); background:#fff; }
+    .container { max-width:1200px; margin:0 auto; padding:0 20px; }
+    header { position:fixed; top:0; left:0; right:0; background:white; box-shadow:0 2px 10px rgba(0,0,0,0.06); z-index:100; }
+    nav { display:flex; justify-content:space-between; align-items:center; padding:16px 0; }
+    .logo { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:800; color:var(--primary); text-decoration:none; }
+    .nav-links { display:flex; gap:28px; list-style:none; }
+    .nav-links a { color:var(--text-muted); text-decoration:none; font-weight:500; transition:color 0.3s; }
+    .nav-links a:hover { color:var(--primary); }
+    .btn { padding:8px 20px; border-radius:50px; font-weight:600; text-decoration:none; font-size:0.95rem; transition:all 0.3s; }
+    .btn-primary { background:var(--primary); color:white; }
+    .btn-primary:hover { background:var(--primary-dark); transform:translateY(-2px); }
+    .hero { padding:140px 0 100px; text-align:center; background:linear-gradient(rgba(255,255,255,0.9),rgba(255,255,255,0.9)), url('https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg') center/cover; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.8rem); margin-bottom:0.8rem; }
+    .hero p { font-size:1.25rem; max-width:680px; margin:0 auto 2rem; color:var(--text-muted); }
+    .search-box { background:white; border-radius:16px; padding:32px; box-shadow:var(--shadow); max-width:900px; margin:0 auto; }
+    .tabs { display:flex; gap:12px; justify-content:center; margin-bottom:24px; flex-wrap:wrap; }
+    .tab { padding:10px 24px; border-radius:50px; background:var(--light); color:var(--text-muted); font-weight:500; cursor:pointer; transition:all 0.3s; }
+    .tab.active { background:var(--primary); color:white; box-shadow:0 4px 15px rgba(37,99,235,0.3); transform:translateY(-2px); }
+    .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+    input { padding:14px 18px; border:1px solid #d1d5db; border-radius:12px; font-size:1rem; }
+    .btn-search { grid-column:1/-1; padding:16px; font-size:1.15rem; }
+    .section { padding:90px 0; background:var(--light); }
+    .section-title { text-align:center; font-family:'Playfair Display',serif; font-size:2.6rem; margin-bottom:3rem; }
+    .grid-4 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; }
+    .card { background:white; border-radius:16px; overflow:hidden; box-shadow:var(--shadow); transition:transform 0.4s; }
+    .card:hover { transform:translateY(-10px); }
+    .card-img { height:200px; background-size:cover; background-position:center; }
+    .card-body { padding:24px; text-align:center; }
+    .cta-banner { background:var(--primary); color:white; text-align:center; padding:80px 20px; }
+    footer { background:#0f172a; color:#cbd5e1; padding:60px 0 30px; text-align:center; }
+    @media (max-width:768px) { .nav-links { display:none; } .hero { padding:110px 0 80px; } }
   </style>
 </head>
 <body>
@@ -261,18 +73,18 @@
     <h1>Reliable Travel Solutions</h1>
     <p>Airport transfers • Local & outstation taxis • Train bookings • Visa assistance</p>
 
-    <div class="search-box">
-      <div class="tabs">
-        <div class="tab active">Airport Transfer</div>
-        <div class="tab">Local Taxi</div>
-        <div class="tab">Train Ticket</div>
-        <div class="tab">Visa Services</div>
+    <div class="search-box" id="searchBox">
+      <div class="tabs" id="tabs">
+        <div class="tab active" data-service="airport">Airport Transfer</div>
+        <div class="tab" data-service="taxi">Local Taxi</div>
+        <div class="tab" data-service="train">Train Ticket</div>
+        <div class="tab" data-service="visa">Visa Services</div>
       </div>
 
       <div class="form-grid">
-        <input type="text" placeholder="Pickup City / Airport">
-        <input type="text" placeholder="Destination">
-        <input type="datetime-local" placeholder="Travel Date & Time">
+        <input type="text" placeholder="Pickup City / Airport" id="pickup">
+        <input type="text" placeholder="Destination" id="drop">
+        <input type="datetime-local" placeholder="Travel Date & Time" id="datetime">
         <a href="tel:+919914610704" class="btn btn-primary btn-search">Book Now</a>
       </div>
     </div>
@@ -336,5 +148,33 @@
   </div>
 </footer>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        // Add active to clicked tab
+        tab.classList.add('active');
+        
+        // Optional: Change placeholder text based on service (future ready)
+        const service = tab.getAttribute('data-service');
+        const pickupInput = document.getElementById('pickup');
+        if (service === 'airport') {
+          pickupInput.placeholder = "Pickup Airport / City";
+        } else if (service === 'taxi') {
+          pickupInput.placeholder = "Pickup Location";
+        } else if (service === 'train') {
+          pickupInput.placeholder = "From Station";
+        } else if (service === 'visa') {
+          pickupInput.placeholder = "Destination Country";
+        }
+      });
+    });
+  });
+</script>
+
 </body>
-  </html>
+</html>
