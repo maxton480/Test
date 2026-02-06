@@ -43,11 +43,29 @@
             animation: fadeInUp 3s ease-out forwards;
         }
 
-        audio {
-            display: none; /* Completely hidden – no controls, no click needed */
+        .play-btn {
+            padding: 20px 60px;
+            font-size: 1.8em;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255,20,147,0.5);
+            margin: 30px 0;
+            transition: all 0.3s;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Super light petals – minimal for smoothness */
+        .play-btn:hover, .play-btn:active {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(255,20,147,0.7);
+        }
+
+        audio {
+            display: none;
+        }
+
         .petals {
             position: fixed;
             inset: 0;
@@ -93,47 +111,56 @@
         
         <p class="message">
             Tu meri zindagi ki sabse khoobsurat kali hai...<br>
-            Har subah, har shaam tere bina adhoori lagti hai.<br>
-            Yeh rose tere liye, aur mera saara pyaar bhi tere naam! 😘
+            Har pal tere bina adhoora sa lagta hai.<br>
+            Yeh rose sirf tere liye, aur mera saara pyaar bhi tere naam! 😘
         </p>
 
-        <!-- Hidden audio – autoplay + loop, no controls, no user interaction needed -->
-        <audio autoplay loop>
+        <!-- Hidden audio – starts at 34 seconds -->
+        <audio id="bgMusic" loop>
             <source src="https://s320.djpunjab.is/data/320/56325/305613/Tere%20Bina%20Na%20Guzara%20E%20-%20Josh%20Brar.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
+
+        <!-- Big Play Button -->
+        <button class="play-btn" id="playBtn">Play Song 🎵</button>
     </div>
 
     <script>
-        // Lyrics completely removed as per your request
+        const audio = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
 
-        // Ultra-lightweight petals – even fewer & slower
+        // When user taps the play button, start from 34 seconds
+        playBtn.addEventListener('click', () => {
+            audio.currentTime = 34;  // Start from 34 seconds
+            audio.play().then(() => {
+                playBtn.style.display = 'none';  // Hide button after playing
+            }).catch(err => {
+                console.log("Autoplay blocked, but button worked:", err);
+            });
+        });
+
+        playBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            audio.currentTime = 34;
+            audio.play().then(() => {
+                playBtn.style.display = 'none';
+            }).catch(() => {});
+        });
+
+        // Ultra-light petals – very few, slow
         function createPetal() {
             const petal = document.createElement('div');
             petal.className = 'petal';
             petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = (Math.random() * 10 + 12) + 's'; // 12–22 seconds fall
+            petal.style.animationDuration = (Math.random() * 10 + 12) + 's';
             document.getElementById('petals').appendChild(petal);
             setTimeout(() => petal.remove(), 25000);
         }
 
-        // Only 1 petal every 2.5 seconds – very smooth, no lag
-        setInterval(createPetal, 2500);
-
-        // Tiny initial burst (only 5–6 petals)
-        for (let i = 0; i < 6; i++) {
-            setTimeout(createPetal, i * 800);
+        setInterval(createPetal, 3000);  // 1 petal every 3 seconds
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createPetal, i * 1000);
         }
-
-        // Try to force play on load (mobile browsers may still require interaction)
-        // But since no controls, it will auto-start when possible
-        const audio = document.querySelector('audio');
-        audio.play().catch(() => {
-            // If blocked, play on first user interaction (tap anywhere)
-            document.body.addEventListener('touchstart', () => {
-                audio.play().catch(() => {});
-            }, { once: true });
-        });
     </script>
 </body>
 </html>
