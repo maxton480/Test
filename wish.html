@@ -28,73 +28,26 @@
         }
 
         h1 {
-            font-size: 3em;
+            font-size: 3.2em;
             margin: 0 0 20px;
             color: #c71585;
-            text-shadow: 2px 2px 10px rgba(255,105,180,0.7);
-            animation: softGlow 5s ease-in-out infinite alternate;
+            text-shadow: 2px 2px 12px rgba(255,105,180,0.7);
+            animation: softGlow 6s ease-in-out infinite alternate;
         }
 
         .message {
-            font-size: 1.4em;
+            font-size: 1.5em;
             line-height: 1.7;
-            margin: 15px 0 30px;
+            margin: 20px 0 40px;
             opacity: 0;
-            animation: fadeInUp 2.5s ease-out forwards;
+            animation: fadeInUp 3s ease-out forwards;
         }
 
         audio {
-            width: 90%;
-            max-width: 400px;
-            margin: 25px 0;
-            opacity: 0;
-            animation: fadeInUp 2.5s ease-out 1.5s forwards;
+            display: none; /* Completely hidden – no controls, no click needed */
         }
 
-        .lyrics {
-            font-size: 1.5em;
-            font-weight: 500;
-            color: #c71585;
-            margin: 20px 0;
-            min-height: 180px;
-            opacity: 0;
-            animation: fadeInUp 2.5s ease-out 3s forwards;
-        }
-
-        .lyric-line {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-        }
-
-        .lyric-line.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .lyric-line.active {
-            color: #ff1493;
-            font-size: 1.7em;
-            text-shadow: 0 0 15px rgba(255,20,147,0.9);
-            animation: gentlePulse 4s infinite alternate;
-        }
-
-        /* Lightweight animations */
-        @keyframes softGlow {
-            from { text-shadow: 0 0 8px #ff69b4; }
-            to   { text-shadow: 0 0 25px #ff1493; }
-        }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes gentlePulse {
-            from { text-shadow: 0 0 10px #ff69b4; }
-            to   { text-shadow: 0 0 35px #ff1493; }
-        }
-
-        /* Very optimized petals – minimal count, long duration */
+        /* Super light petals – minimal for smoothness */
         .petals {
             position: fixed;
             inset: 0;
@@ -105,20 +58,29 @@
 
         .petal {
             position: absolute;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             background: #ff1493;
-            border-radius: 50% 30% 50% 30%;
+            border-radius: 50%;
             opacity: 0;
             will-change: transform, opacity;
-            animation: fall 15s linear infinite;
-            box-shadow: 0 3px 10px rgba(255,20,147,0.2);
+            animation: fall 18s linear infinite;
+            box-shadow: 0 2px 8px rgba(255,20,147,0.2);
         }
 
         @keyframes fall {
-            0%   { transform: translateY(-15vh) rotate(0deg); opacity: 0; }
-            20%  { opacity: 0.8; }
-            100% { transform: translateY(120vh) rotate(1440deg); opacity: 0; }
+            0%   { transform: translateY(-20vh) rotate(0deg); opacity: 0; }
+            25%  { opacity: 0.75; }
+            100% { transform: translateY(130vh) rotate(1800deg); opacity: 0; }
+        }
+
+        @keyframes softGlow {
+            from { text-shadow: 0 0 10px #ff69b4; }
+            to   { text-shadow: 0 0 30px #ff1493; }
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -131,65 +93,47 @@
         
         <p class="message">
             Tu meri zindagi ki sabse khoobsurat kali hai...<br>
-            Har pal tere bina adhoora sa lagta hai.<br>
-            Yeh rose sirf tere liye, aur mera dil bhi tere naam! 😘
+            Har subah, har shaam tere bina adhoori lagti hai.<br>
+            Yeh rose tere liye, aur mera saara pyaar bhi tere naam! 😘
         </p>
 
-        <!-- MP3 auto-play (loop) – replace src with your direct MP3 URL -->
-        <audio controls autoplay loop>
+        <!-- Hidden audio – autoplay + loop, no controls, no user interaction needed -->
+        <audio autoplay loop>
             <source src="https://s320.djpunjab.is/data/320/56325/305613/Tere%20Bina%20Na%20Guzara%20E%20-%20Josh%20Brar.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
-
-        <div class="lyrics" id="lyrics"></div>
     </div>
 
     <script>
-        // Lyrics timing (adjust based on your MP3 length/start)
-        const lyricsData = [
-            { time: 2,  text: "Pehlan tere nain main dekhe" },
-            { time: 5,  text: "Fer dekheya tenu ni..." },
-            { time: 8,  text: "Chheti aake mil ja biba" },
-            { time: 11, text: "Mil ja aake menu ni..." },
-            { time: 14, text: "O vasson bahr dil ho geya" },
-            { time: 17, text: "Vasson bahr dil ho geya..." },
-            { time: 20, text: "Koi chalda na chara e" },
-            { time: 23, text: "Tere bina na guzara e..." },
-            { time: 26, text: "Tere bina na guzara e..." },
-            { time: 30, text: "Dil diyan gallan sun la ve" },
-            { time: 33, text: "Dil vich vasda tu hi ae..." }
-        ];
+        // Lyrics completely removed as per your request
 
-        const lyricsContainer = document.getElementById('lyrics');
-
-        lyricsData.forEach((line) => {
-            const div = document.createElement('div');
-            div.className = 'lyric-line';
-            div.textContent = line.text;
-            lyricsContainer.appendChild(div);
-
-            setTimeout(() => {
-                div.classList.add('visible');
-                setTimeout(() => div.classList.add('active'), 1000);
-                setTimeout(() => div.classList.remove('active'), 6000);
-            }, line.time * 1000);
-        });
-
-        // Extremely lightweight petals – only 1 every 1.5s, long life
+        // Ultra-lightweight petals – even fewer & slower
         function createPetal() {
             const petal = document.createElement('div');
             petal.className = 'petal';
             petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = (Math.random() * 8 + 12) + 's';
+            petal.style.animationDuration = (Math.random() * 10 + 12) + 's'; // 12–22 seconds fall
             document.getElementById('petals').appendChild(petal);
-            setTimeout(() => petal.remove(), 20000);
+            setTimeout(() => petal.remove(), 25000);
         }
 
-        setInterval(createPetal, 1500); // 1 petal every 1.5 seconds
-        // Small initial burst
-        for (let i = 0; i < 8; i++) {
-            setTimeout(createPetal, i * 600);
+        // Only 1 petal every 2.5 seconds – very smooth, no lag
+        setInterval(createPetal, 2500);
+
+        // Tiny initial burst (only 5–6 petals)
+        for (let i = 0; i < 6; i++) {
+            setTimeout(createPetal, i * 800);
         }
+
+        // Try to force play on load (mobile browsers may still require interaction)
+        // But since no controls, it will auto-start when possible
+        const audio = document.querySelector('audio');
+        audio.play().catch(() => {
+            // If blocked, play on first user interaction (tap anywhere)
+            document.body.addEventListener('touchstart', () => {
+                audio.play().catch(() => {});
+            }, { once: true });
+        });
     </script>
 </body>
 </html>
