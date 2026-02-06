@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Game 2: Emoji Quiz! 🌹</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(to bottom, #ff9a9e, #fff0f5);
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            touch-action: manipulation;
+        }
+        h1 { color: #c71585; font-size: 2.2em; margin: 20px; }
+        p { font-size: 1.3em; margin: 10px; }
+        .quiz-option {
+            background: #fad0c4;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 15px;
+            font-size: 1.2em;
+            width: 80%;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .quiz-option:active { background: #ff9a9e; }
+        .quiz-option.correct { background: #90ee90 !important; }
+        .quiz-option.wrong { background: #ffb6c1 !important; }
+        button { padding: 15px 40px; font-size: 1.4em; background: #ff69b4; color: white; border: none; border-radius: 50px; cursor: pointer; margin: 20px; -webkit-tap-highlight-color: transparent; outline: none; }
+        button:active { transform: scale(0.95); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Game 2: Emoji Quiz!</h1>
+    <p>Guess kar inka matlab!</p>
+    <div id="quizQ"></div>
+    <div id="quizOpts"></div>
+    <button id="nextQ" class="hidden">Next ➡️</button>
+    <script>
+        const quizQuestions = [
+            { q: "❤️🌹💕 ka matlab?", opts: ["Pizza 🍕", "Hamara pyaar 💖", "Shopping 🛍️"], correct: 1 },
+            { q: "😘🚀🌟 tere liye?", opts: ["Rocket 🚀", "Tu meri star hai! ⭐", "Bye 😢"], correct: 1 }
+        ];
+        let quizIdx = 0;
+        function loadQuiz() {
+            const q = quizQuestions[quizIdx];
+            document.getElementById('quizQ').innerHTML = `<p><strong>Q${quizIdx+1}:</strong> ${q.q}</p>`;
+            document.getElementById('quizOpts').innerHTML = q.opts.map((opt, i) => 
+                `<div class="quiz-option" data-idx="\( {i}"> \){opt}</div>`
+            ).join('');
+            document.getElementById('nextQ').classList.add('hidden');
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.addEventListener('click', handleQuizTap);
+                opt.addEventListener('touchstart', handleQuizTap);
+            });
+        }
+        function handleQuizTap(e) {
+            e.preventDefault();
+            const idx = parseInt(e.currentTarget.dataset.idx);
+            const q = quizQuestions[quizIdx];
+            document.querySelectorAll('.quiz-option').forEach((o, i) => {
+                if (i === q.correct) o.classList.add('correct');
+                if (i === idx && idx !== q.correct) o.classList.add('wrong');
+            });
+            document.getElementById('nextQ').classList.remove('hidden');
+        }
+        document.getElementById('nextQ').addEventListener('click', () => {
+            quizIdx++;
+            if (quizIdx < quizQuestions.length) {
+                loadQuiz();
+            } else {
+                alert("Quiz complete! Last game...");
+                window.location.href = 'game3.html';
+            }
+        });
+        document.getElementById('nextQ').addEventListener('touchstart', e => { e.preventDefault(); });
+        loadQuiz(); // Start quiz
+    </script>
+</body>
+</html>
