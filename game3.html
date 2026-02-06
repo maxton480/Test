@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Game 3: Fast Tap! 🌹</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(to bottom, #ff9a9e, #fff0f5);
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            touch-action: manipulation;
+        }
+        h1 { color: #c71585; font-size: 2.2em; margin: 20px; }
+        p { font-size: 1.3em; margin: 10px; }
+        .timer { font-size: 3em; color: #ff69b4; margin: 20px; font-weight: bold; }
+        button { padding: 15px 40px; font-size: 1.4em; background: #ff69b4; color: white; border: none; border-radius: 50px; cursor: pointer; margin: 20px; -webkit-tap-highlight-color: transparent; outline: none; }
+        button:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+    <h1>Game 3: Fast Tap!</h1>
+    <p>5 sec mein max tap kar screen pe!</p>
+    <div class="timer" id="timer">5</div>
+    <p>Taps: <span id="frenzyCount">0</span></p>
+    <button id="startFrenzy">Start! 🖐️</button>
+    <script>
+        let frenzyTaps = 0;
+        let frenzyTimer = 5;
+        let frenzyInt;
+        document.getElementById('startFrenzy').addEventListener('click', startFrenzyGame);
+        document.getElementById('startFrenzy').addEventListener('touchstart', e => { e.preventDefault(); startFrenzyGame(); });
+        function startFrenzyGame() {
+            frenzyTaps = 0;
+            frenzyTimer = 5;
+            document.getElementById('timer').textContent = 5;
+            document.getElementById('frenzyCount').textContent = 0;
+            document.getElementById('startFrenzy').classList.add('hidden');
+            document.body.addEventListener('click', countFrenzyTap);
+            document.body.addEventListener('touchstart', countFrenzyTap);
+            frenzyInt = setInterval(() => {
+                frenzyTimer--;
+                document.getElementById('timer').textContent = frenzyTimer;
+                if (frenzyTimer <= 0) {
+                    clearInterval(frenzyInt);
+                    document.body.removeEventListener('click', countFrenzyTap);
+                    document.body.removeEventListener('touchstart', countFrenzyTap);
+                    alert(`Wow ${frenzyTaps} taps! Ab surprise...`);
+                    window.location.href = 'wish.html';
+                }
+            }, 1000);
+        }
+        function countFrenzyTap(e) {
+            e.preventDefault();
+            frenzyTaps++;
+            document.getElementById('frenzyCount').textContent = frenzyTaps;
+        }
+    </script>
+</body>
+</html>
