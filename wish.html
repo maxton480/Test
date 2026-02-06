@@ -32,7 +32,7 @@
             margin: 0 0 20px;
             color: #c71585;
             text-shadow: 2px 2px 10px rgba(255,105,180,0.7);
-            animation: softGlow 4s ease-in-out infinite alternate;
+            animation: softGlow 5s ease-in-out infinite alternate;
         }
 
         .message {
@@ -64,7 +64,7 @@
         .lyric-line {
             opacity: 0;
             transform: translateY(50px);
-            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
         }
 
         .lyric-line.visible {
@@ -76,20 +76,17 @@
             color: #ff1493;
             font-size: 1.7em;
             text-shadow: 0 0 15px rgba(255,20,147,0.9);
-            animation: gentlePulse 3s infinite alternate;
+            animation: gentlePulse 4s infinite alternate;
         }
 
-        /* Smooth, lightweight animations */
+        /* Lightweight animations */
         @keyframes softGlow {
             from { text-shadow: 0 0 8px #ff69b4; }
             to   { text-shadow: 0 0 25px #ff1493; }
         }
 
         @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes gentlePulse {
@@ -97,31 +94,31 @@
             to   { text-shadow: 0 0 35px #ff1493; }
         }
 
-        /* Optimized petals – fewer, longer duration, GPU-friendly */
+        /* Very optimized petals – minimal count, long duration */
         .petals {
             position: fixed;
             inset: 0;
             pointer-events: none;
             z-index: 1;
-            will-change: transform; /* GPU acceleration */
+            will-change: transform;
         }
 
         .petal {
             position: absolute;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             background: #ff1493;
             border-radius: 50% 30% 50% 30%;
             opacity: 0;
             will-change: transform, opacity;
-            animation: fall 12s linear infinite;
-            box-shadow: 0 4px 12px rgba(255,20,147,0.3);
+            animation: fall 15s linear infinite;
+            box-shadow: 0 3px 10px rgba(255,20,147,0.2);
         }
 
         @keyframes fall {
             0%   { transform: translateY(-15vh) rotate(0deg); opacity: 0; }
-            15%  { opacity: 0.85; }
-            100% { transform: translateY(115vh) rotate(1080deg); opacity: 0; }
+            20%  { opacity: 0.8; }
+            100% { transform: translateY(120vh) rotate(1440deg); opacity: 0; }
         }
     </style>
 </head>
@@ -138,8 +135,9 @@
             Yeh rose sirf tere liye, aur mera dil bhi tere naam! 😘
         </p>
 
+        <!-- MP3 auto-play (loop) – replace src with your direct MP3 URL -->
         <audio controls autoplay loop>
-            <source src="https://files.catbox.moe/abc123.mp3" type="audio/mpeg"> <!-- REPLACE THIS WITH YOUR MP3 LINK -->
+            <source src="https://s320.djpunjab.is/data/320/56325/305613/Tere%20Bina%20Na%20Guzara%20E%20-%20Josh%20Brar.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
 
@@ -147,7 +145,7 @@
     </div>
 
     <script>
-        // Lyrics with approximate timings (in seconds) – adjust as per your mp3
+        // Lyrics timing (adjust based on your MP3 length/start)
         const lyricsData = [
             { time: 2,  text: "Pehlan tere nain main dekhe" },
             { time: 5,  text: "Fer dekheya tenu ni..." },
@@ -164,53 +162,34 @@
 
         const lyricsContainer = document.getElementById('lyrics');
 
-        lyricsData.forEach((line, index) => {
+        lyricsData.forEach((line) => {
             const div = document.createElement('div');
             div.className = 'lyric-line';
             div.textContent = line.text;
             lyricsContainer.appendChild(div);
 
-            // Show line smoothly
             setTimeout(() => {
                 div.classList.add('visible');
-                
-                // Highlight for 4-5 seconds then remove
-                setTimeout(() => {
-                    div.classList.add('active');
-                }, 800);
-
-                setTimeout(() => {
-                    div.classList.remove('active');
-                }, 5000);
+                setTimeout(() => div.classList.add('active'), 1000);
+                setTimeout(() => div.classList.remove('active'), 6000);
             }, line.time * 1000);
         });
 
-        // Super optimized petals – only 20-30 at a time, longer duration
+        // Extremely lightweight petals – only 1 every 1.5s, long life
         function createPetal() {
             const petal = document.createElement('div');
             petal.className = 'petal';
             petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = (Math.random() * 6 + 10) + 's'; // 10-16s fall
+            petal.style.animationDuration = (Math.random() * 8 + 12) + 's';
             document.getElementById('petals').appendChild(petal);
-            setTimeout(() => petal.remove(), 18000);
+            setTimeout(() => petal.remove(), 20000);
         }
 
-        // Create petals less frequently
-        setInterval(createPetal, 800); // every 0.8s one petal
-        // Initial gentle burst
-        for (let i = 0; i < 15; i++) {
-            setTimeout(createPetal, i * 400);
+        setInterval(createPetal, 1500); // 1 petal every 1.5 seconds
+        // Small initial burst
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createPetal, i * 600);
         }
-
-        // Optional: Pause/resume audio on visibility change to save battery
-        document.addEventListener('visibilitychange', () => {
-            const audio = document.querySelector('audio');
-            if (document.hidden) {
-                audio.pause();
-            } else {
-                audio.play().catch(() => {});
-            }
-        });
     </script>
 </body>
 </html>
