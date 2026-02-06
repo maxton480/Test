@@ -17,51 +17,94 @@
             align-items: center;
             color: #333;
             touch-action: manipulation;
+            user-select: none; /* Prevent text selection on tap */
         }
-        h1 { color: #c71585; font-size: 2.2em; margin: 20px; }
-        p { font-size: 1.3em; margin: 10px; }
-        .timer { font-size: 3em; color: #ff69b4; margin: 20px; font-weight: bold; }
-        button { padding: 15px 40px; font-size: 1.4em; background: #ff69b4; color: white; border: none; border-radius: 50px; cursor: pointer; margin: 20px; -webkit-tap-highlight-color: transparent; outline: none; }
+        h1 { color: #c71585; font-size: 2.2em; margin: 20px 0; }
+        p { font-size: 1.3em; margin: 10px 0; }
+        .timer { 
+            font-size: 5em; 
+            font-weight: bold; 
+            color: #ff69b4; 
+            margin: 20px 0; 
+            min-width: 100px;
+        }
+        .score { font-size: 1.8em; color: #8b0000; margin: 15px 0; }
+        button {
+            padding: 18px 60px;
+            font-size: 1.5em;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            -webkit-tap-highlight-color: transparent;
+        }
         button:active { transform: scale(0.95); }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
-    <h1>Game 3: Fast Tap!</h1>
-    <p>5 sec mein max tap kar screen pe!</p>
+    <h1>Game 3: Fast Tap Challenge!</h1>
+    <p>5 seconds mein jitna ho sake screen pe tap kar!</p>
     <div class="timer" id="timer">5</div>
-    <p>Taps: <span id="frenzyCount">0</span></p>
-    <button id="startFrenzy">Start! 🖐️</button>
+    <p class="score">Taps: <span id="frenzyCount">0</span></p>
+    <button id="startBtn">Start Tapping! 🖐️</button>
+
     <script>
         let frenzyTaps = 0;
-        let frenzyTimer = 5;
-        let frenzyInt;
-        document.getElementById('startFrenzy').addEventListener('click', startFrenzyGame);
-        document.getElementById('startFrenzy').addEventListener('touchstart', e => { e.preventDefault(); startFrenzyGame(); });
-        function startFrenzyGame() {
+        let frenzyTime = 5;
+        let intervalId = null;
+        const timerDisplay = document.getElementById('timer');
+        const countDisplay = document.getElementById('frenzyCount');
+        const startBtn = document.getElementById('startBtn');
+
+        function updateDisplays() {
+            timerDisplay.textContent = frenzyTime;
+            countDisplay.textContent = frenzyTaps;
+        }
+
+        function startGame() {
+            if (intervalId) return; // Prevent multiple timers
+
             frenzyTaps = 0;
-            frenzyTimer = 5;
-            document.getElementById('timer').textContent = 5;
-            document.getElementById('frenzyCount').textContent = 0;
-            document.getElementById('startFrenzy').classList.add('hidden');
-            document.body.addEventListener('click', countFrenzyTap);
-            document.body.addEventListener('touchstart', countFrenzyTap);
-            frenzyInt = setInterval(() => {
-                frenzyTimer--;
-                document.getElementById('timer').textContent = frenzyTimer;
-                if (frenzyTimer <= 0) {
-                    clearInterval(frenzyInt);
-                    document.body.removeEventListener('click', countFrenzyTap);
-                    document.body.removeEventListener('touchstart', countFrenzyTap);
-                    alert(`Wow ${frenzyTaps} taps! Ab surprise...`);
-                    window.location.href = 'wish.html';
+            frenzyTime = 5;
+            updateDisplays();
+            startBtn.classList.add('hidden');
+
+            // Add tap listeners on whole body
+            document.body.addEventListener('click', countTap);
+            document.body.addEventListener('touchstart', countTap, { passive: false });
+
+            // Start countdown
+            intervalId = setInterval(() => {
+                frenzyTime--;
+                updateDisplays();
+
+                if (frenzyTime <= 0) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                    document.body.removeEventListener('click', countTap);
+                    document.body.removeEventListener('touchstart', countTap);
+                    alert(`Time's up! You got ${frenzyTaps} taps! 🔥`);
+                    window.location.href = 'wish.html'; // Redirect to final wish
                 }
             }, 1000);
         }
-        function countFrenzyTap(e) {
-            e.preventDefault();
+
+        function countTap(e) {
+            e.preventDefault(); // Prevent scrolling/zoom on mobile
             frenzyTaps++;
-            document.getElementById('frenzyCount').textContent = frenzyTaps;
+            updateDisplays();
         }
+
+        // Start button listeners
+        startBtn.addEventListener('click', startGame);
+        startBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startGame();
+        });
     </script>
 </body>
 </html>
