@@ -3,453 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Unlock My Heart Game 🌹</title>
+    <title>Rose Day Surprise 🌹</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e, #fecfef, #fff0f5);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+            background: linear-gradient(to bottom, #ff9a9e, #fff0f5);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: #333;
             touch-action: manipulation;
-            text-align: center;
         }
 
         .screen {
             display: none;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .screen.active {
-            display: flex;
             flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.92);
-            padding: 25px 20px;
-            border-radius: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
-            width: 90%;
-            max-width: 350px;
-            animation: fadeIn 0.8s ease;
-        }
+        .active { display: flex !important; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1 {
-            color: #c71585;
-            font-size: 1.8em;
-            margin: 0 0 15px;
-        }
-
-        p {
-            font-size: 1.1em;
-            margin: 10px 0;
-            line-height: 1.4;
-        }
+        h1 { color: #c71585; font-size: 2.2em; margin-bottom: 20px; }
+        p { font-size: 1.3em; margin: 15px 0; }
 
         button {
-            padding: 12px 30px;
-            font-size: 1.2em;
+            padding: 18px 50px;
+            font-size: 1.5em;
+            background: #ff69b4;
+            color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin: 10px;
-            background: #ff69b4;
-            color: white;
-            width: 80%;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            margin: 20px;
             -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
         }
 
-        button:hover, button:active {
-            transform: scale(1.05);
-        }
+        button:active { transform: scale(0.95); }
 
-        .game-btn {
+        #shyBtn {
             position: absolute;
+            width: 100px;
+            height: 100px;
             background: #ff4757;
-            width: 120px;
-            height: 120px;
             border-radius: 50%;
-            font-size: 1.5em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 3em;
             color: white;
             border: none;
             cursor: pointer;
-            transition: all 0.2s;
             -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        .game-btn:active {
-            transform: scale(0.95);
-        }
-
-        .hearts {
-            position: absolute;
-            font-size: 2em;
-            pointer-events: none;
-            animation: floatUp 1s ease-out forwards;
-        }
-
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
-        }
-
-        .timer {
-            font-size: 1.5em;
-            color: #ff69b4;
-            margin: 20px 0;
-        }
-
-        .score {
-            font-size: 1.3em;
-            color: #8b0000;
-        }
-
-        .quiz-option {
-            background: #fad0c4;
-            color: #333;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: background 0.3s;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .quiz-option:active {
-            background: #ff9a9e;
-        }
-
-        .quiz-option.correct {
-            background: #90ee90;
-        }
-
-        .quiz-option.wrong {
-            background: #ffb6c1;
-        }
-
-        .song-iframe {
-            width: 100%;
-            height: 180px;
-            border: none;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
-        .petals {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .petal {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: #ff1493;
-            border-radius: 50% 0 50% 0;
-            opacity: 0.8;
-            animation: fall 4s linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-        }
-
-        @media (max-width: 500px) {
-            h1 { font-size: 1.6em; }
-            p { font-size: 1em; }
-            button { font-size: 1.1em; }
-            .song-iframe { height: 150px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="petals" id="petals"></div>
-
     <!-- Intro Screen -->
     <div class="screen active" id="intro">
-        <div class="container">
-            <h1>Hey Meri Rose! 🌹😍</h1>
-            <p>3 mazedaar games khel ke surprise unlock kar!<br>Ready? Tap kar!</p>
-            <button id="startBtn">Shuru Karo! 🚀</button>
-        </div>
+        <h1>Hey Meri Jaan! 🌹💕</h1>
+        <p>Ek chhota sa game khel ke surprise unlock kar!<br>Tap "Shuru Karo" pe – chalna chahiye ab!</p>
+        <button id="startBtn">Shuru Karo! 🚀</button>
     </div>
 
-    <!-- Game 1: Catch the Shy Button -->
-    <div class="screen" id="game1">
-        <div class="container">
-            <h1>Game 1: Catch Me! 🏃‍♀️💕</h1>
-            <p>Shy heart ko 3 baar tap kar pakad! 😂</p>
-            <p class="score">Taps: <span id="tapCount">0</span>/3</p>
-        </div>
-        <button class="game-btn" id="shyBtn">💖</button>
-    </div>
-
-    <!-- Game 2: Emoji Quiz -->
-    <div class="screen" id="game2">
-        <div class="container">
-            <h1>Game 2: Emoji Quiz! 🤔❤️</h1>
-            <p>Emoji ka matlab guess kar (2 sawal)</p>
-            <div id="quizContent"></div>
-            <button id="nextQuiz" style="display:none;">Next! ➡️</button>
-        </div>
-    </div>
-
-    <!-- Game 3: Tap Frenzy -->
-    <div class="screen" id="game3">
-        <div class="container">
-            <h1>Game 3: Fast Tap Challenge! ⚡💓</h1>
-            <p>5 sec mein max tap kar screen pe!</p>
-            <div class="timer" id="timer">5</div>
-            <p class="score">Taps: <span id="frenzyScore">0</span></p>
-            <button id="frenzyStart">Start Tapping! 🖐️</button>
-            <button id="frenzyEnd" style="display:none;">Done! 🎉</button>
-        </div>
-    </div>
-
-    <!-- Win Screen - Song only on final win, no auto-play conflict -->
-    <div class="screen" id="win">
-        <div class="container">
-            <h1>Happy Rose Day Meri Jaan! 🌹💖</h1>
-            <p>Superb! Saare games jeet liye! 😍<br>Tu meri sabse pyari rose hai... tere bina na guzara e! 💕<br>Love you bohot zyada! 😘</p>
-            <p>Ab yeh special gaana tere liye... best emotional part se shuru!</p>
-            <iframe class="song-iframe" src="https://www.youtube.com/embed/aYG6oEUXyuQ?start=45&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            <p>Play button dabake sun le full maza! Aur bata kaisa laga 💃</p>
-        </div>
+    <!-- Game Screen (Catch the Heart) -->
+    <div class="screen" id="game">
+        <h1>Pakad Le Mujhe! ❤️</h1>
+        <p>Is red heart ko 3 baar tap kar pakad le! 😂</p>
+        <p>Taps: <span id="count">0</span> / 3</p>
+        <button id="shyBtn">❤️</button>
     </div>
 
     <script>
-        let tapCount = 0;
-        let quizQuestion = 0;
-        let frenzyTaps = 0;
-        let frenzyTime = 5;
-        let frenzyInterval;
-        let quizData = [
-            {
-                question: "❤️🌹💕 ka matlab?",
-                options: ["Pizza time 🍕", "Our love story 💖", "Shopping mall 🛍️"],
-                correct: 1
-            },
-            {
-                question: "😘🚀🌟 tere liye?",
-                options: ["Rocket launch 🚀", "You're my star! ⭐", "Kiss goodbye 😢"],
-                correct: 1
-            }
-        ];
-
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        function startGame1() {
-            showScreen('game1');
-            tapCount = 0;
-            updateTapCount();
-            moveShyBtn();
-        }
-
-        function tapShy(e) {
-            e.preventDefault();
-            tapCount++;
-            updateTapCount();
-            const x = e.touches ? e.touches[0].clientX : e.clientX;
-            const y = e.touches ? e.touches[0].clientY : e.clientY;
-            createHeart(x, y);
-            if (tapCount >= 3) {
-                alert("Pakad liya! Next game! 😍");
-                startGame2();
-            } else {
-                moveShyBtn();
-            }
-        }
-
-        function updateTapCount() {
-            document.getElementById('tapCount').textContent = tapCount;
-        }
-
-        function moveShyBtn() {
-            const btn = document.getElementById('shyBtn');
-            const maxX = window.innerWidth - 140;
-            const maxY = window.innerHeight - 140;
-            const x = Math.random() * maxX + 20;
-            const y = Math.random() * maxY + 20;
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-        }
-
-        function createHeart(x, y) {
-            const heart = document.createElement('div');
-            heart.className = 'hearts';
-            heart.innerHTML = '💖';
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1000);
-        }
-
-        function startGame2() {
-            showScreen('game2');
-            quizQuestion = 0;
-            showQuestion();
-        }
-
-        function showQuestion() {
-            const q = quizData[quizQuestion];
-            document.getElementById('quizContent').innerHTML = `
-                <p><strong>Q${quizQuestion + 1}:</strong> ${q.question}</p>
-                \( {q.options.map((opt, i) => `<div class="quiz-option" data-index=" \){i}">${opt}</div>`).join('')}
-            `;
-            document.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.addEventListener('click', handleQuizClick);
-                opt.addEventListener('touchstart', handleQuizClick);
-            });
-            document.getElementById('nextQuiz').style.display = 'none';
-        }
-
-        function handleQuizClick(e) {
-            e.preventDefault();
-            const index = parseInt(e.currentTarget.dataset.index);
-            const q = quizData[quizQuestion];
-            const options = document.querySelectorAll('.quiz-option');
-            options.forEach((opt, i) => {
-                if (i === q.correct) opt.classList.add('correct');
-                else if (i === index && index !== q.correct) opt.classList.add('wrong');
-            });
-            if (index === q.correct) {
-                alert("Correct! 😊");
-            } else {
-                alert("Wrong! But next try! 😂");
-            }
-            document.getElementById('nextQuiz').style.display = 'block';
-        }
-
-        function nextQuestion() {
-            quizQuestion++;
-            if (quizQuestion < quizData.length) {
-                showQuestion();
-            } else {
-                alert("Quiz done! Last game! 🔥");
-                startGame3();
-            }
-        }
-
-        function startFrenzy() {
-            frenzyTaps = 0;
-            frenzyTime = 5;
-            updateFrenzy();
-            document.getElementById('frenzyStart').style.display = 'none';
-            document.getElementById('frenzyEnd').style.display = 'block';
-            document.addEventListener('click', countTap);
-            document.addEventListener('touchstart', countTap);
-            frenzyInterval = setInterval(() => {
-                frenzyTime--;
-                updateFrenzy();
-                if (frenzyTime <= 0) {
-                    clearInterval(frenzyInterval);
-                    document.removeEventListener('click', countTap);
-                    document.removeEventListener('touchstart', countTap);
-                    alert(`Amazing! ${frenzyTaps} taps! 💭😍`);
-                    showScreen('win');
-                    startPetalsRain();
-                }
-            }, 1000);
-        }
-
-        function countTap(e) {
-            e.preventDefault();
-            frenzyTaps++;
-            updateFrenzy();
-            const x = e.touches ? e.touches[0].clientX : e.clientX;
-            const y = e.touches ? e.touches[0].clientY : e.clientY;
-            createHeart(x, y);
-        }
-
-        function updateFrenzy() {
-            document.getElementById('timer').textContent = frenzyTime;
-            document.getElementById('frenzyScore').textContent = frenzyTaps;
-        }
-
-        function startGame3() {
-            showScreen('game3');
-            frenzyTaps = 0;
-            frenzyTime = 5;
-            updateFrenzy();
-            document.getElementById('frenzyStart').style.display = 'block';
-            document.getElementById('frenzyEnd').style.display = 'none';
-        }
-
-        function startPetalsRain() {
-            const petals = document.getElementById('petals');
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    const petal = document.createElement('div');
-                    petal.className = 'petal';
-                    petal.style.left = Math.random() * 100 + 'vw';
-                    petal.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                    petal.style.animationDelay = Math.random() * 2 + 's';
-                    petals.appendChild(petal);
-                    setTimeout(() => petal.remove(), 6000);
-                }, i * 50);
-            }
-        }
-
-        // All event listeners
+        const intro = document.getElementById('intro');
+        const game = document.getElementById('game');
         const startBtn = document.getElementById('startBtn');
-        startBtn.addEventListener('click', startGame1);
-        startBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startGame1(); });
-
         const shyBtn = document.getElementById('shyBtn');
-        shyBtn.addEventListener('click', tapShy);
-        shyBtn.addEventListener('touchstart', tapShy);
+        let taps = 0;
 
-        const nextQuiz = document.getElementById('nextQuiz');
-        nextQuiz.addEventListener('click', nextQuestion);
-        nextQuiz.addEventListener('touchstart', (e) => { e.preventDefault(); nextQuestion(); });
+        function startGame() {
+            intro.classList.remove('active');
+            game.classList.add('active');
+            moveHeart();
+        }
 
-        const frenzyStart = document.getElementById('frenzyStart');
-        frenzyStart.addEventListener('click', startFrenzy);
-        frenzyStart.addEventListener('touchstart', (e) => { e.preventDefault(); startFrenzy(); });
-
-        const frenzyEnd = document.getElementById('frenzyEnd');
-        frenzyEnd.addEventListener('click', () => {
-            clearInterval(frenzyInterval);
-            document.removeEventListener('click', countTap);
-            document.removeEventListener('touchstart', countTap);
-        });
-        frenzyEnd.addEventListener('touchstart', (e) => { 
+        startBtn.addEventListener('click', startGame);
+        startBtn.addEventListener('touchstart', function(e) {
             e.preventDefault();
-            clearInterval(frenzyInterval);
-            document.removeEventListener('click', countTap);
-            document.removeEventListener('touchstart', countTap);
+            startGame();
         });
+
+        function moveHeart() {
+            const maxX = window.innerWidth - 120;
+            const maxY = window.innerHeight - 120;
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            shyBtn.style.left = x + 'px';
+            shyBtn.style.top = y + 'px';
+        }
+
+        function tapHeart(e) {
+            e.preventDefault();
+            taps++;
+            document.getElementById('count').textContent = taps;
+            if (taps >= 3) {
+                alert("Waah! Pakad liya! Happy Rose Day Meri Rose 🌹💖\nAb baaki games add karte hain agar yeh chal gaya toh!");
+            } else {
+                moveHeart();
+            }
+        }
+
+        shyBtn.addEventListener('click', tapHeart);
+        shyBtn.addEventListener('touchstart', tapHeart);
     </script>
 </body>
 </html>
