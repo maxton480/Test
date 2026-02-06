@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Game 1: Pakad Le! 🌹</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(to bottom, #ff9a9e, #fff0f5);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            color: #333;
+            touch-action: manipulation;
+            text-align: center;
+        }
+        h1 { color: #c71585; font-size: 2.2em; margin: 20px; }
+        p { font-size: 1.3em; margin: 10px; }
+        .game-btn {
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            background: #ff4757;
+            border: none;
+            outline: none;
+            border-radius: 50%;
+            font-size: 3em;
+            color: white;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: none;
+        }
+        .game-btn:active { transform: scale(0.9); }
+    </style>
+</head>
+<body>
+    <h1>Game 1: Pakad Le!</h1>
+    <p>Red heart ko 3 baar tap kar pakad! 😂</p>
+    <p>Taps: <span id="tapCount">0</span>/3</p>
+    <button class="game-btn" id="shyBtn">❤️</button>
+    <script>
+        let tapCount = 0;
+        const shyBtn = document.getElementById('shyBtn');
+        function moveShy() {
+            const maxX = window.innerWidth - 130;
+            const maxY = window.innerHeight - 150;
+            const x = Math.random() * maxX + 10;
+            const y = Math.random() * maxY + 10;
+            shyBtn.style.left = x + 'px';
+            shyBtn.style.top = y + 'px';
+        }
+        function handleTap(e) {
+            e.preventDefault();
+            tapCount++;
+            document.getElementById('tapCount').textContent = tapCount;
+            if (tapCount >= 3) {
+                alert("Game 1 jeet liya! Next game...");
+                window.location.href = 'game2.html';
+            } else {
+                moveShy();
+            }
+        }
+        shyBtn.addEventListener('click', handleTap);
+        shyBtn.addEventListener('touchstart', handleTap);
+        moveShy(); // Initial position
+    </script>
+</body>
+</html>
