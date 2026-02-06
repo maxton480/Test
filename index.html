@@ -70,7 +70,7 @@
             background: #ff69b4;
             color: white;
             width: 80%;
-            -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile tap */
+            -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
         }
 
@@ -148,7 +148,7 @@
 
         .song-iframe {
             width: 100%;
-            height: 200px;
+            height: 180px;
             border: none;
             border-radius: 15px;
             margin-top: 20px;
@@ -185,6 +185,7 @@
             h1 { font-size: 1.6em; }
             p { font-size: 1em; }
             button { font-size: 1.1em; }
+            .song-iframe { height: 150px; }
         }
     </style>
 </head>
@@ -196,7 +197,7 @@
     <div class="screen active" id="intro">
         <div class="container">
             <h1>Hey Meri Rose! 🌹😍</h1>
-            <p>3 mazedaar games khel ke mera surprise unlock kar!<br>Ready ho jaa, yeh tere liye hi hai! 💖</p>
+            <p>3 mazedaar games khel ke surprise unlock kar!<br>Ready? Tap kar!</p>
             <button id="startBtn">Shuru Karo! 🚀</button>
         </div>
     </div>
@@ -204,8 +205,8 @@
     <!-- Game 1: Catch the Shy Button -->
     <div class="screen" id="game1">
         <div class="container">
-            <h1>Game 1: Catch Me If You Can! 🏃‍♀️💕</h1>
-            <p>Is shy heart ko 3 baar tap kar pakad le! 😂</p>
+            <h1>Game 1: Catch Me! 🏃‍♀️💕</h1>
+            <p>Shy heart ko 3 baar tap kar pakad! 😂</p>
             <p class="score">Taps: <span id="tapCount">0</span>/3</p>
         </div>
         <button class="game-btn" id="shyBtn">💖</button>
@@ -214,8 +215,8 @@
     <!-- Game 2: Emoji Quiz -->
     <div class="screen" id="game2">
         <div class="container">
-            <h1>Game 2: Emoji Love Quiz! 🤔❤️</h1>
-            <p>Guess kar in emojis ka matlab? (2 questions)</p>
+            <h1>Game 2: Emoji Quiz! 🤔❤️</h1>
+            <p>Emoji ka matlab guess kar (2 sawal)</p>
             <div id="quizContent"></div>
             <button id="nextQuiz" style="display:none;">Next! ➡️</button>
         </div>
@@ -224,8 +225,8 @@
     <!-- Game 3: Tap Frenzy -->
     <div class="screen" id="game3">
         <div class="container">
-            <h1>Game 3: Tap As Fast As My Heart! ⚡💓</h1>
-            <p>5 seconds mein jitna ho sake screen tap kar!</p>
+            <h1>Game 3: Fast Tap Challenge! ⚡💓</h1>
+            <p>5 sec mein max tap kar screen pe!</p>
             <div class="timer" id="timer">5</div>
             <p class="score">Taps: <span id="frenzyScore">0</span></p>
             <button id="frenzyStart">Start Tapping! 🖐️</button>
@@ -233,14 +234,14 @@
         </div>
     </div>
 
-    <!-- Win Screen -->
+    <!-- Win Screen - Song only on final win, no auto-play conflict -->
     <div class="screen" id="win">
         <div class="container">
             <h1>Happy Rose Day Meri Jaan! 🌹💖</h1>
-            <p>Waah! Saare games jeet liye! 😂<br>Tu meri life ki sabse khoobsurat rose hai... tere bina na guzara e! <br>Love you infinity! 😘</p>
-            <p>Ab yeh gaana sun le... tere liye perfect! (Best emotional part se shuru)</p>
-            <iframe class="song-iframe" src="https://www.youtube.com/embed/aYG6oEUXyuQ?autoplay=1&start=45&rel=0" allow="autoplay" allowfullscreen></iframe>
-            <p>Play kar ke maze kar aur mujhe bata kaisa laga! 💃</p>
+            <p>Superb! Saare games jeet liye! 😍<br>Tu meri sabse pyari rose hai... tere bina na guzara e! 💕<br>Love you bohot zyada! 😘</p>
+            <p>Ab yeh special gaana tere liye... best emotional part se shuru!</p>
+            <iframe class="song-iframe" src="https://www.youtube.com/embed/aYG6oEUXyuQ?start=45&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <p>Play button dabake sun le full maza! Aur bata kaisa laga 💃</p>
         </div>
     </div>
 
@@ -276,14 +277,14 @@
         }
 
         function tapShy(e) {
-            e.preventDefault(); // Prevent any default touch behavior
+            e.preventDefault();
             tapCount++;
             updateTapCount();
             const x = e.touches ? e.touches[0].clientX : e.clientX;
             const y = e.touches ? e.touches[0].clientY : e.clientY;
             createHeart(x, y);
             if (tapCount >= 3) {
-                alert("Caught you! Ab next game! 😍");
+                alert("Pakad liya! Next game! 😍");
                 startGame2();
             } else {
                 moveShyBtn();
@@ -296,8 +297,10 @@
 
         function moveShyBtn() {
             const btn = document.getElementById('shyBtn');
-            const x = Math.random() * (window.innerWidth - 140) + 20;
-            const y = Math.random() * (window.innerHeight - 140) + 20;
+            const maxX = window.innerWidth - 140;
+            const maxY = window.innerHeight - 140;
+            const x = Math.random() * maxX + 20;
+            const y = Math.random() * maxY + 20;
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
@@ -341,9 +344,9 @@
                 else if (i === index && index !== q.correct) opt.classList.add('wrong');
             });
             if (index === q.correct) {
-                alert("Sahiii jawab! 😊");
+                alert("Correct! 😊");
             } else {
-                alert("Galat! Par chalega, next! 😂");
+                alert("Wrong! But next try! 😂");
             }
             document.getElementById('nextQuiz').style.display = 'block';
         }
@@ -353,7 +356,7 @@
             if (quizQuestion < quizData.length) {
                 showQuestion();
             } else {
-                alert("Quiz khatam! Last game shuru! 🔥");
+                alert("Quiz done! Last game! 🔥");
                 startGame3();
             }
         }
@@ -373,7 +376,7 @@
                     clearInterval(frenzyInterval);
                     document.removeEventListener('click', countTap);
                     document.removeEventListener('touchstart', countTap);
-                    alert(`Wow! ${frenzyTaps} taps! Itna hi toh sochta hoon tujhe roz! 💭😍`);
+                    alert(`Amazing! ${frenzyTaps} taps! 💭😍`);
                     showScreen('win');
                     startPetalsRain();
                 }
@@ -418,26 +421,35 @@
             }
         }
 
-        // Event listeners with both click and touch for full mobile support
-        document.getElementById('startBtn').addEventListener('click', startGame1);
-        document.getElementById('startBtn').addEventListener('touchstart', (e) => { e.preventDefault(); startGame1(); });
+        // All event listeners
+        const startBtn = document.getElementById('startBtn');
+        startBtn.addEventListener('click', startGame1);
+        startBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startGame1(); });
 
         const shyBtn = document.getElementById('shyBtn');
         shyBtn.addEventListener('click', tapShy);
         shyBtn.addEventListener('touchstart', tapShy);
 
-        document.getElementById('nextQuiz').addEventListener('click', nextQuestion);
-        document.getElementById('nextQuiz').addEventListener('touchstart', (e) => { e.preventDefault(); nextQuestion(); });
+        const nextQuiz = document.getElementById('nextQuiz');
+        nextQuiz.addEventListener('click', nextQuestion);
+        nextQuiz.addEventListener('touchstart', (e) => { e.preventDefault(); nextQuestion(); });
 
-        document.getElementById('frenzyStart').addEventListener('click', startFrenzy);
-        document.getElementById('frenzyStart').addEventListener('touchstart', (e) => { e.preventDefault(); startFrenzy(); });
+        const frenzyStart = document.getElementById('frenzyStart');
+        frenzyStart.addEventListener('click', startFrenzy);
+        frenzyStart.addEventListener('touchstart', (e) => { e.preventDefault(); startFrenzy(); });
 
-        document.getElementById('frenzyEnd').addEventListener('click', endFrenzy = () => {
+        const frenzyEnd = document.getElementById('frenzyEnd');
+        frenzyEnd.addEventListener('click', () => {
             clearInterval(frenzyInterval);
             document.removeEventListener('click', countTap);
             document.removeEventListener('touchstart', countTap);
         });
-        document.getElementById('frenzyEnd').addEventListener('touchstart', (e) => { e.preventDefault(); endFrenzy(); });
+        frenzyEnd.addEventListener('touchstart', (e) => { 
+            e.preventDefault();
+            clearInterval(frenzyInterval);
+            document.removeEventListener('click', countTap);
+            document.removeEventListener('touchstart', countTap);
+        });
     </script>
 </body>
 </html>
