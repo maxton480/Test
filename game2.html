@@ -18,22 +18,35 @@
             color: #333;
             touch-action: manipulation;
         }
-        h1 { color: #c71585; font-size: 2.2em; margin: 20px; }
-        p { font-size: 1.3em; margin: 10px; }
+        h1 { color: #c71585; font-size: 2.2em; margin: 20px 0; }
+        p { font-size: 1.3em; margin: 10px 0; }
+        #quizQ { font-size: 1.4em; margin: 20px 0; font-weight: bold; }
         .quiz-option {
             background: #fad0c4;
-            padding: 15px;
-            margin: 12px 0;
+            padding: 18px;
+            margin: 15px 0;
             border-radius: 15px;
-            font-size: 1.2em;
-            width: 80%;
+            font-size: 1.3em;
+            width: 85%;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
+            transition: background 0.3s;
         }
         .quiz-option:active { background: #ff9a9e; }
-        .quiz-option.correct { background: #90ee90 !important; }
-        .quiz-option.wrong { background: #ffb6c1 !important; }
-        button { padding: 15px 40px; font-size: 1.4em; background: #ff69b4; color: white; border: none; border-radius: 50px; cursor: pointer; margin: 20px; -webkit-tap-highlight-color: transparent; outline: none; }
+        .quiz-option.correct { background: #90ee90 !important; color: #000; }
+        .quiz-option.wrong { background: #ffb6c1 !important; color: #000; }
+        button {
+            padding: 15px 50px;
+            font-size: 1.4em;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 30px 0;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
         button:active { transform: scale(0.95); }
         .hidden { display: none; }
     </style>
@@ -43,46 +56,87 @@
     <p>Guess kar inka matlab!</p>
     <div id="quizQ"></div>
     <div id="quizOpts"></div>
-    <button id="nextQ" class="hidden">Next ➡️</button>
+    <button id="nextQ" class="hidden">Next Question ➡️</button>
+
     <script>
         const quizQuestions = [
-            { q: "❤️🌹💕 ka matlab?", opts: ["Pizza 🍕", "Hamara pyaar 💖", "Shopping 🛍️"], correct: 1 },
-            { q: "😘🚀🌟 tere liye?", opts: ["Rocket 🚀", "Tu meri star hai! ⭐", "Bye 😢"], correct: 1 }
+            {
+                q: "❤️🌹💕 ka matlab?",
+                opts: ["Pizza time 🍕", "Hamara pyaar 💖", "Shopping mall 🛍️"],
+                correct: 1
+            },
+            {
+                q: "😘🚀🌟 tere liye?",
+                opts: ["Rocket launch 🚀", "Tu meri star hai! ⭐", "Kiss goodbye 😢"],
+                correct: 1
+            }
         ];
+
         let quizIdx = 0;
+
         function loadQuiz() {
             const q = quizQuestions[quizIdx];
-            document.getElementById('quizQ').innerHTML = `<p><strong>Q${quizIdx+1}:</strong> ${q.q}</p>`;
-            document.getElementById('quizOpts').innerHTML = q.opts.map((opt, i) => 
-                `<div class="quiz-option" data-idx="\( {i}"> \){opt}</div>`
-            ).join('');
-            document.getElementById('nextQ').classList.add('hidden');
+            document.getElementById('quizQ').innerHTML = `<p><strong>Q${quizIdx + 1}:</strong> ${q.q}</p>`;
+
+            const optsDiv = document.getElementById('quizOpts');
+            optsDiv.innerHTML = ''; // Clear previous options
+
+            q.opts.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.textContent = opt;
+                div.dataset.idx = i; // Use dataset for index
+                optsDiv.appendChild(div);
+            });
+
+            // Add listeners after creating elements
             document.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.addEventListener('click', handleQuizTap);
-                opt.addEventListener('touchstart', handleQuizTap);
+                const handler = function(e) {
+                    e.preventDefault();
+                    const idx = parseInt(this.dataset.idx);
+                    handleAnswer(idx);
+                };
+                opt.addEventListener('click', handler);
+                opt.addEventListener('touchstart', handler);
             });
+
+            document.getElementById('nextQ').classList.add('hidden');
         }
-        function handleQuizTap(e) {
-            e.preventDefault();
-            const idx = parseInt(e.currentTarget.dataset.idx);
+
+        function handleAnswer(selectedIdx) {
             const q = quizQuestions[quizIdx];
-            document.querySelectorAll('.quiz-option').forEach((o, i) => {
-                if (i === q.correct) o.classList.add('correct');
-                if (i === idx && idx !== q.correct) o.classList.add('wrong');
+            document.querySelectorAll('.quiz-option').forEach((opt, i) => {
+                opt.removeEventListener('click', () => {}); // Clean up (optional)
+                opt.removeEventListener('touchstart', () => {});
+                if (i === q.correct) {
+                    opt.classList.add('correct');
+                } else if (i === selectedIdx) {
+                    opt.classList.add('wrong');
+                }
+                opt.style.pointerEvents = 'none'; // Disable further clicks
             });
+
             document.getElementById('nextQ').classList.remove('hidden');
         }
-        document.getElementById('nextQ').addEventListener('click', () => {
+
+        document.getElementById('nextQ').addEventListener('click', nextQuestion);
+        document.getElementById('nextQ').addEventListener('touchstart', e => {
+            e.preventDefault();
+            nextQuestion();
+        });
+
+        function nextQuestion() {
             quizIdx++;
             if (quizIdx < quizQuestions.length) {
                 loadQuiz();
             } else {
-                alert("Quiz complete! Last game...");
+                alert("Quiz complete! Ab last game...");
                 window.location.href = 'game3.html';
             }
-        });
-        document.getElementById('nextQ').addEventListener('touchstart', e => { e.preventDefault(); });
-        loadQuiz(); // Start quiz
+        }
+
+        // Start first question
+        loadQuiz();
     </script>
 </body>
 </html>
