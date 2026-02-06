@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Rose Day! 🌹</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(to bottom, #ff9a9e, #fff0f5);
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            text-align: center;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        h1 { color: #c71585; font-size: 2.5em; margin: 20px; animation: fadeIn 2s ease-in; }
+        p { font-size: 1.3em; margin: 10px; animation: fadeIn 3s ease-in; }
+        iframe { width: 90%; height: 200px; border-radius: 15px; margin: 20px; }
+        .lyrics { font-size: 1.4em; color: #8b0000; margin: 20px; width: 80%; }
+        .lyric-line { opacity: 0; transition: opacity 1s ease, transform 1s ease; transform: translateY(20px); }
+        .lyric-line.visible { opacity: 1; transform: translateY(0); }
+        .lyric-line.highlight { color: #ff1493; text-shadow: 0 0 10px #ff69b4; animation: spotlight 2s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spotlight { 0% { text-shadow: 0 0 5px #ff69b4; } 50% { text-shadow: 0 0 20px #ff1493; } 100% { text-shadow: 0 0 10px #ff69b4; } }
+        .petals { position: fixed; inset: 0; pointer-events: none; z-index: -1; }
+        .petal { position: absolute; width: 20px; height: 20px; background: #ff1493; border-radius: 50% 0 50% 0; opacity: 0.8; animation: fall 6s linear infinite; }
+        @keyframes fall { 0% { transform: translateY(-20vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 100% { transform: translateY(120vh) rotate(720deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+    <h1>Happy Rose Day Meri Jaan! 🌹💖</h1>
+    <p>Tu meri life ki sabse pyari rose hai!<br>Tere bina na guzara e... 😘</p>
+    <p>Ab yeh gaana sun – best part se shuru ("Pehlan tere nain main dekhe, fer dekheya tenu ni...")</p>
+    <iframe src="https://www.youtube.com/embed/aYG6oEUXyuQ?start=30" frameborder="0" allowfullscreen></iframe>
+    <p>Play button dabake full feel le! 💃</p>
+    <div class="lyrics" id="lyricsContainer"></div>
+    <div class="petals" id="petals"></div>
+    <script>
+        const lyrics = [
+            { text: "Pehlan tere nain main dekhe, fer dekheya tenu ni", time: 0 },
+            { text: "(Pehlan tere nain main dekhe, fer dekheya tenu ni)", time: 5 },
+            { text: "Chheti aake milja biba, milja aake menu ni", time: 10 },
+            { text: "(Chheti aake milja biba, milja aake menu ni)", time: 15 },
+            { text: "O vasson bahr dil ho geya, vasson bahr dil ho geya", time: 20 },
+            { text: "Koi chalda na chara e, tere bina na guzara e", time: 25 },
+            { text: "Koi chalda na chara e, tere bina na guzara e", time: 30 },
+            { text: "Tere mathe di lat sajni, sajda menu kardi e", time: 35 },
+            { text: "(Tere mathe di lat sajni, sajda menu kardi e)", time: 40 },
+            { text: "Dil diyan gallan sun la ve, dil vich vasda tu hi ae", time: 45 },
+            { text: "(Dil diyan gallan sun la ve, dil vich vasda tu hi ae)", time: 50 },
+            { text: "O vasson bahr dil ho geya, vasson bahr dil ho geya", time: 55 },
+            { text: "Koi chalda na chara e, tere bina na guzara e", time: 60 },
+            { text: "Koi chalda na chara e, tere bina na guzara e", time: 65 }
+            // Add more lines if needed from full lyrics
+        ];
+        const lyricsContainer = document.getElementById('lyricsContainer');
+        lyrics.forEach((line, index) => {
+            const div = document.createElement('div');
+            div.className = 'lyric-line';
+            div.textContent = line.text;
+            lyricsContainer.appendChild(div);
+            setTimeout(() => {
+                div.classList.add('visible');
+                if (index === Math.floor(lyrics.length / 2)) { // Highlight middle line as example
+                    div.classList.add('highlight');
+                }
+            }, line.time * 1000); // Time in ms
+        });
+        // Petals rain
+        const petals = document.getElementById('petals');
+        for (let i = 0; i < 80; i++) {
+            setTimeout(() => {
+                const p = document.createElement('div');
+                p.className = 'petal';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                petals.appendChild(p);
+                setTimeout(() => p.remove(), 8000);
+            }, i * 100);
+        }
+    </script>
+</body>
+</html>
