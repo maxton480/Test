@@ -3,87 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Rose Day! 🌹</title>
+    <title>Happy Rose Day Meri Jaan 🌹💖</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             height: 100vh;
-            background: linear-gradient(to bottom, #ff9a9e, #fff0f5);
-            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fff0f5 100%);
+            font-family: 'Georgia', serif;
+            color: #8b0000;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #333;
             text-align: center;
-            overflow: hidden;
-            touch-action: manipulation;
+            position: relative;
         }
-        h1 { color: #c71585; font-size: 2.5em; margin: 20px; animation: fadeIn 2s ease-in; }
-        p { font-size: 1.3em; margin: 10px; animation: fadeIn 3s ease-in; }
-        iframe { width: 90%; height: 200px; border-radius: 15px; margin: 20px; }
-        .lyrics { font-size: 1.4em; color: #8b0000; margin: 20px; width: 80%; }
-        .lyric-line { opacity: 0; transition: opacity 1s ease, transform 1s ease; transform: translateY(20px); }
-        .lyric-line.visible { opacity: 1; transform: translateY(0); }
-        .lyric-line.highlight { color: #ff1493; text-shadow: 0 0 10px #ff69b4; animation: spotlight 2s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes spotlight { 0% { text-shadow: 0 0 5px #ff69b4; } 50% { text-shadow: 0 0 20px #ff1493; } 100% { text-shadow: 0 0 10px #ff69b4; } }
-        .petals { position: fixed; inset: 0; pointer-events: none; z-index: -1; }
-        .petal { position: absolute; width: 20px; height: 20px; background: #ff1493; border-radius: 50% 0 50% 0; opacity: 0.8; animation: fall 6s linear infinite; }
-        @keyframes fall { 0% { transform: translateY(-20vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 100% { transform: translateY(120vh) rotate(720deg); opacity: 0; } }
+
+        .container {
+            z-index: 10;
+            padding: 20px;
+            max-width: 90%;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            margin: 0 0 15px;
+            color: #c71585;
+            text-shadow: 2px 2px 8px rgba(255,105,180,0.6);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        .message {
+            font-size: 1.5em;
+            line-height: 1.6;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 2s ease-out 1s forwards;
+        }
+
+        .instructions {
+            font-size: 1.2em;
+            color: #555;
+            margin: 15px 0;
+            opacity: 0;
+            animation: fadeUp 2s ease-out 2.5s forwards;
+        }
+
+        iframe {
+            width: 90%;
+            max-width: 420px;
+            height: 240px;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            margin: 25px 0;
+            opacity: 0;
+            animation: fadeUp 2s ease-out 4s forwards;
+        }
+
+        .lyrics {
+            font-size: 1.6em;
+            font-weight: 500;
+            color: #c71585;
+            margin: 30px 0;
+            min-height: 120px;
+            opacity: 0;
+            animation: fadeUp 2s ease-out 5s forwards;
+        }
+
+        .lyric-line {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s ease-out;
+        }
+
+        .lyric-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lyric-line.active {
+            color: #ff1493;
+            font-size: 1.8em;
+            text-shadow: 0 0 20px rgba(255,20,147,0.8);
+            animation: pulseGlow 2.5s infinite alternate;
+        }
+
+        /* Animations */
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff69b4; }
+            to   { text-shadow: 0 0 30px #ff1493, 0 0 50px #ff69b4; }
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseGlow {
+            from { text-shadow: 0 0 10px #ff69b4; }
+            to   { text-shadow: 0 0 30px #ff1493, 0 0 60px #ff69b4; }
+        }
+
+        /* Floating petals background */
+        .petals {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .petal {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle at 30% 30%, #ff69b4, #ff1493);
+            border-radius: 50% 20% 50% 20% / 60% 60% 40% 40%;
+            opacity: 0;
+            animation: fall linear infinite;
+            box-shadow: 0 5px 15px rgba(255,20,147,0.4);
+        }
+
+        @keyframes fall {
+            0%   { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.9; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
-    <h1>Happy Rose Day Meri Jaan! 🌹💖</h1>
-    <p>Tu meri life ki sabse pyari rose hai!<br>Tere bina na guzara e... 😘</p>
-    <p>Ab yeh gaana sun – best part se shuru ("Pehlan tere nain main dekhe, fer dekheya tenu ni...")</p>
-    <iframe src="https://www.youtube.com/embed/aYG6oEUXyuQ?start=30" frameborder="0" allowfullscreen></iframe>
-    <p>Play button dabake full feel le! 💃</p>
-    <div class="lyrics" id="lyricsContainer"></div>
+
     <div class="petals" id="petals"></div>
+
+    <div class="container">
+        <h1>Happy Rose Day<br>Meri Jaan! 🌹💖</h1>
+        
+        <p class="message">
+            Tu meri zindagi ki sabse khoobsurat kali hai...<br>
+            Har subah tere bina adhoori lagti hai.<br>
+            Yeh rose tere liye, aur mera dil bhi tere naam! 😘
+        </p>
+
+        <p class="instructions">
+            Ab yeh gaana sun le...<br>
+            Best emotional part se shuru hai (Pehlan tere nain...)
+        </p>
+
+        <iframe src="https://www.youtube.com/embed/aYG6oEUXyuQ?start=28&autoplay=1" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+
+        <div class="lyrics" id="lyrics"></div>
+    </div>
+
     <script>
-        const lyrics = [
-            { text: "Pehlan tere nain main dekhe, fer dekheya tenu ni", time: 0 },
-            { text: "(Pehlan tere nain main dekhe, fer dekheya tenu ni)", time: 5 },
-            { text: "Chheti aake milja biba, milja aake menu ni", time: 10 },
-            { text: "(Chheti aake milja biba, milja aake menu ni)", time: 15 },
-            { text: "O vasson bahr dil ho geya, vasson bahr dil ho geya", time: 20 },
-            { text: "Koi chalda na chara e, tere bina na guzara e", time: 25 },
-            { text: "Koi chalda na chara e, tere bina na guzara e", time: 30 },
-            { text: "Tere mathe di lat sajni, sajda menu kardi e", time: 35 },
-            { text: "(Tere mathe di lat sajni, sajda menu kardi e)", time: 40 },
-            { text: "Dil diyan gallan sun la ve, dil vich vasda tu hi ae", time: 45 },
-            { text: "(Dil diyan gallan sun la ve, dil vich vasda tu hi ae)", time: 50 },
-            { text: "O vasson bahr dil ho geya, vasson bahr dil ho geya", time: 55 },
-            { text: "Koi chalda na chara e, tere bina na guzara e", time: 60 },
-            { text: "Koi chalda na chara e, tere bina na guzara e", time: 65 }
-            // Add more lines if needed from full lyrics
+        // Lyrics with approximate timings (in seconds from start=28)
+        const lyricsData = [
+            { time: 2,  text: "Pehlan tere nain main dekhe", active: true },
+            { time: 4,  text: "Fer dekheya tenu ni...", active: false },
+            { time: 7,  text: "Chheti aake mil ja biba", active: true },
+            { time: 9,  text: "Mil ja aake menu ni...", active: false },
+            { time: 12, text: "O vasson bahr dil ho geya", active: true },
+            { time: 15, text: "Vasson bahr dil ho geya...", active: false },
+            { time: 18, text: "Koi chalda na chara e", active: true },
+            { time: 21, text: "Tere bina na guzara e...", active: true },
+            { time: 25, text: "Tere bina na guzara e...", active: true },
+            { time: 29, text: "Dil diyan gallan sun la ve", active: true },
+            { time: 32, text: "Dil vich vasda tu hi ae...", active: false }
         ];
-        const lyricsContainer = document.getElementById('lyricsContainer');
-        lyrics.forEach((line, index) => {
+
+        const lyricsContainer = document.getElementById('lyrics');
+
+        // Create lyric elements
+        lyricsData.forEach((line, index) => {
             const div = document.createElement('div');
             div.className = 'lyric-line';
             div.textContent = line.text;
             lyricsContainer.appendChild(div);
+
+            // Show line
             setTimeout(() => {
                 div.classList.add('visible');
-                if (index === Math.floor(lyrics.length / 2)) { // Highlight middle line as example
-                    div.classList.add('highlight');
-                }
-            }, line.time * 1000); // Time in ms
+            }, line.time * 1000);
+
+            // Highlight active lines
+            if (line.active) {
+                setTimeout(() => {
+                    div.classList.add('active');
+                }, line.time * 1000 + 300);
+            }
         });
-        // Petals rain
-        const petals = document.getElementById('petals');
-        for (let i = 0; i < 80; i++) {
-            setTimeout(() => {
-                const p = document.createElement('div');
-                p.className = 'petal';
-                p.style.left = Math.random() * 100 + 'vw';
-                p.style.animationDuration = (Math.random() * 4 + 4) + 's';
-                petals.appendChild(p);
-                setTimeout(() => p.remove(), 8000);
-            }, i * 100);
+
+        // Continuous petals rain
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = (Math.random() * 5 + 6) + 's';
+            petal.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('petals').appendChild(petal);
+
+            setTimeout(() => petal.remove(), 10000);
+        }
+
+        // Create petals every 300-600ms
+        setInterval(createPetal, Math.random() * 300 + 300);
+        // Initial burst
+        for (let i = 0; i < 30; i++) {
+            setTimeout(createPetal, i * 150);
         }
     </script>
 </body>
