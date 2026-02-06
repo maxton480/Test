@@ -1,196 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TravelEase – Reliable Travel Solutions</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-  <style>
-    /* Yeh pura style copy kar lo – chhota button, clean look */
-    :root {
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --text: #0f172a;
-      --text-muted: #475569;
-      --light: #f8fafc;
-      --shadow: 0 8px 25px rgba(0,0,0,0.08);
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Inter',sans-serif; color:var(--text); background:#fff; }
-    .container { max-width:1200px; margin:0 auto; padding:0 20px; }
-    header { position:fixed; top:0; left:0; right:0; background:white; box-shadow:0 2px 10px rgba(0,0,0,0.06); z-index:100; }
-    nav { display:flex; justify-content:space-between; align-items:center; padding:16px 0; }
-    .logo { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:800; color:var(--primary); text-decoration:none; }
-    .nav-links { display:flex; gap:28px; list-style:none; }
-    .nav-links a { color:var(--text-muted); text-decoration:none; font-weight:500; transition:color 0.3s; }
-    .nav-links a:hover { color:var(--primary); }
-    .btn { padding:8px 20px; border-radius:50px; font-weight:600; text-decoration:none; font-size:0.95rem; transition:all 0.3s; }
-    .btn-primary { background:var(--primary); color:white; }
-    .btn-primary:hover { background:var(--primary-dark); transform:translateY(-2px); }
-    .hero { padding:140px 0 100px; text-align:center; background:linear-gradient(rgba(255,255,255,0.9),rgba(255,255,255,0.9)), url('https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg') center/cover; }
-    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.8rem); margin-bottom:0.8rem; }
-    .hero p { font-size:1.25rem; max-width:680px; margin:0 auto 2rem; color:var(--text-muted); }
-    .search-box { background:white; border-radius:16px; padding:32px; box-shadow:var(--shadow); max-width:900px; margin:0 auto; }
-    .tabs { display:flex; gap:12px; justify-content:center; margin-bottom:24px; flex-wrap:wrap; }
-    .tab { padding:10px 24px; border-radius:50px; background:var(--light); color:var(--text-muted); font-weight:500; cursor:pointer; transition:all 0.3s; }
-    .tab.active { background:var(--primary); color:white; box-shadow:0 4px 15px rgba(37,99,235,0.3); transform:translateY(-2px); }
-    .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
-    input { padding:14px 18px; border:1px solid #d1d5db; border-radius:12px; font-size:1rem; }
-    .btn-search { grid-column:1/-1; padding:16px; font-size:1.15rem; }
-    .section { padding:90px 0; background:var(--light); }
-    .section-title { text-align:center; font-family:'Playfair Display',serif; font-size:2.6rem; margin-bottom:3rem; }
-    .grid-4 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; }
-    .card { background:white; border-radius:16px; overflow:hidden; box-shadow:var(--shadow); transition:transform 0.4s; }
-    .card:hover { transform:translateY(-10px); }
-    .card-img { height:200px; background-size:cover; background-position:center; }
-    .card-body { padding:24px; text-align:center; }
-    .cta-banner { background:var(--primary); color:white; text-align:center; padding:80px 20px; }
-    footer { background:#0f172a; color:#cbd5e1; padding:60px 0 30px; text-align:center; }
-    @media (max-width:768px) { .nav-links { display:none; } .hero { padding:110px 0 80px; } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Unlock My Heart Game 🌹</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef, #fff0f5);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: #333;
+            touch-action: manipulation;
+            text-align: center;
+        }
+
+        .screen {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 25px 20px;
+            border-radius: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+            width: 90%;
+            max-width: 350px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #c71585;
+            font-size: 1.8em;
+            margin: 0 0 15px;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin: 10px;
+            background: #ff69b4;
+            color: white;
+            width: 80%;
+            -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile tap */
+            touch-action: manipulation;
+        }
+
+        button:hover, button:active {
+            transform: scale(1.05);
+        }
+
+        .game-btn {
+            position: absolute;
+            background: #ff4757;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .game-btn:active {
+            transform: scale(0.95);
+        }
+
+        .hearts {
+            position: absolute;
+            font-size: 2em;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+        }
+
+        .timer {
+            font-size: 1.5em;
+            color: #ff69b4;
+            margin: 20px 0;
+        }
+
+        .score {
+            font-size: 1.3em;
+            color: #8b0000;
+        }
+
+        .quiz-option {
+            background: #fad0c4;
+            color: #333;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .quiz-option:active {
+            background: #ff9a9e;
+        }
+
+        .quiz-option.correct {
+            background: #90ee90;
+        }
+
+        .quiz-option.wrong {
+            background: #ffb6c1;
+        }
+
+        .song-iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .petal {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #ff1493;
+            border-radius: 50% 0 50% 0;
+            opacity: 0.8;
+            animation: fall 4s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        @media (max-width: 500px) {
+            h1 { font-size: 1.6em; }
+            p { font-size: 1em; }
+            button { font-size: 1.1em; }
+        }
+    </style>
 </head>
 <body>
 
-<header>
-  <div class="container">
-    <nav>
-      <a href="index.html" class="logo">TravelEase</a>
-      <ul class="nav-links">
-        <li><a href="airport-transfer.html">Airport Transfer</a></li>
-        <li><a href="taxi-booking.html">Taxi Booking</a></li>
-        <li><a href="train-booking.html">Train Booking</a></li>
-        <li><a href="visa-services.html">Visa Services</a></li>
-      </ul>
-      <a href="tel:+919914610704" class="btn btn-primary">Book Now</a>
-    </nav>
-  </div>
-</header>
+    <div class="petals" id="petals"></div>
 
-<section class="hero">
-  <div class="container">
-    <h1>Reliable Travel Solutions</h1>
-    <p>Airport transfers • Local & outstation taxis • Train bookings • Visa assistance</p>
-
-    <div class="search-box" id="searchBox">
-      <div class="tabs" id="tabs">
-        <div class="tab active" data-service="airport">Airport Transfer</div>
-        <div class="tab" data-service="taxi">Local Taxi</div>
-        <div class="tab" data-service="train">Train Ticket</div>
-        <div class="tab" data-service="visa">Visa Services</div>
-      </div>
-
-      <div class="form-grid">
-        <input type="text" placeholder="Pickup City / Airport" id="pickup">
-        <input type="text" placeholder="Destination" id="drop">
-        <input type="datetime-local" placeholder="Travel Date & Time" id="datetime">
-        <a href="tel:+919914610704" class="btn btn-primary btn-search">Book Now</a>
-      </div>
+    <!-- Intro Screen -->
+    <div class="screen active" id="intro">
+        <div class="container">
+            <h1>Hey Meri Rose! 🌹😍</h1>
+            <p>3 mazedaar games khel ke mera surprise unlock kar!<br>Ready ho jaa, yeh tere liye hi hai! 💖</p>
+            <button id="startBtn">Shuru Karo! 🚀</button>
+        </div>
     </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">Our Services</h2>
-    <div class="grid-4">
-
-      <!-- Airport Transfer Card – Link added -->
-      <a href="airport-transfer.html" class="card-link" style="text-decoration:none; color:inherit; display:block;">
-        <div class="card">
-          <div class="card-img" style="background-image:url('https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
-          <div class="card-body">
-            <h3>Airport Transfers</h3>
-            <p>Flight tracking • Meet & greet • Fixed fares</p>
-          </div>
+    <!-- Game 1: Catch the Shy Button -->
+    <div class="screen" id="game1">
+        <div class="container">
+            <h1>Game 1: Catch Me If You Can! 🏃‍♀️💕</h1>
+            <p>Is shy heart ko 3 baar tap kar pakad le! 😂</p>
+            <p class="score">Taps: <span id="tapCount">0</span>/3</p>
         </div>
-      </a>
-
-      <!-- Taxi Booking Card -->
-      <a href="taxi-booking.html" class="card-link" style="text-decoration:none; color:inherit; display:block;">
-        <div class="card">
-          <div class="card-img" style="background-image:url('https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
-          <div class="card-body">
-            <h3>Taxi & Cab Booking</h3>
-            <p>Local • Outstation • Hourly packages</p>
-          </div>
-        </div>
-      </a>
-
-      <!-- Train Booking Card -->
-      <a href="train-booking.html" class="card-link" style="text-decoration:none; color:inherit; display:block;">
-        <div class="card">
-          <div class="card-img" style="background-image:url('https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
-          <div class="card-body">
-            <h3>Train Tickets</h3>
-            <p>Tatkal • Group booking • Confirmation help</p>
-          </div>
-        </div>
-      </a>
-
-      <!-- Visa Services Card -->
-      <a href="visa-services.html" class="card-link" style="text-decoration:none; color:inherit; display:block;">
-        <div class="card">
-          <div class="card-img" style="background-image:url('https://images.pexels.com/photos/3769981/pexels-photo-3769981.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
-          <div class="card-body">
-            <h3>Visa Assistance</h3>
-            <p>Tourist • Business • Student • 50+ countries</p>
-          </div>
-        </div>
-      </a>
-
+        <button class="game-btn" id="shyBtn">💖</button>
     </div>
-  </div>
-</section>
-<section class="cta-banner">
-  <div class="container">
-    <h2>Ready to Travel?</h2>
-    <p style="font-size:1.3rem; max-width:700px; margin:0 auto 2rem; opacity:0.9;">
-      One call – instant quote & priority booking
-    </p>
-    <a href="tel:+919914610704" class="btn btn-primary" style="font-size:1.3rem; padding:16px 40px;">
-      Book Now
-    </a>
-  </div>
-</section>
 
-<footer>
-  <div class="container">
-    <p>TravelEase • Ludhiana, Punjab • Your Trusted Travel Partner</p>
-    <p style="margin-top:1.5rem; font-size:0.9rem; opacity:0.7;">
-      © 2026 TravelEase – All rights reserved
-    </p>
-  </div>
-</footer>
+    <!-- Game 2: Emoji Quiz -->
+    <div class="screen" id="game2">
+        <div class="container">
+            <h1>Game 2: Emoji Love Quiz! 🤔❤️</h1>
+            <p>Guess kar in emojis ka matlab? (2 questions)</p>
+            <div id="quizContent"></div>
+            <button id="nextQuiz" style="display:none;">Next! ➡️</button>
+        </div>
+    </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const tabs = document.querySelectorAll('.tab');
-    
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        // Remove active from all tabs
-        tabs.forEach(t => t.classList.remove('active'));
-        // Add active to clicked tab
-        tab.classList.add('active');
-        
-        // Optional: Change placeholder text based on service (future ready)
-        const service = tab.getAttribute('data-service');
-        const pickupInput = document.getElementById('pickup');
-        if (service === 'airport') {
-          pickupInput.placeholder = "Pickup Airport / City";
-        } else if (service === 'taxi') {
-          pickupInput.placeholder = "Pickup Location";
-        } else if (service === 'train') {
-          pickupInput.placeholder = "From Station";
-        } else if (service === 'visa') {
-          pickupInput.placeholder = "Destination Country";
+    <!-- Game 3: Tap Frenzy -->
+    <div class="screen" id="game3">
+        <div class="container">
+            <h1>Game 3: Tap As Fast As My Heart! ⚡💓</h1>
+            <p>5 seconds mein jitna ho sake screen tap kar!</p>
+            <div class="timer" id="timer">5</div>
+            <p class="score">Taps: <span id="frenzyScore">0</span></p>
+            <button id="frenzyStart">Start Tapping! 🖐️</button>
+            <button id="frenzyEnd" style="display:none;">Done! 🎉</button>
+        </div>
+    </div>
+
+    <!-- Win Screen -->
+    <div class="screen" id="win">
+        <div class="container">
+            <h1>Happy Rose Day Meri Jaan! 🌹💖</h1>
+            <p>Waah! Saare games jeet liye! 😂<br>Tu meri life ki sabse khoobsurat rose hai... tere bina na guzara e! <br>Love you infinity! 😘</p>
+            <p>Ab yeh gaana sun le... tere liye perfect! (Best emotional part se shuru)</p>
+            <iframe class="song-iframe" src="https://www.youtube.com/embed/aYG6oEUXyuQ?autoplay=1&start=45&rel=0" allow="autoplay" allowfullscreen></iframe>
+            <p>Play kar ke maze kar aur mujhe bata kaisa laga! 💃</p>
+        </div>
+    </div>
+
+    <script>
+        let tapCount = 0;
+        let quizQuestion = 0;
+        let frenzyTaps = 0;
+        let frenzyTime = 5;
+        let frenzyInterval;
+        let quizData = [
+            {
+                question: "❤️🌹💕 ka matlab?",
+                options: ["Pizza time 🍕", "Our love story 💖", "Shopping mall 🛍️"],
+                correct: 1
+            },
+            {
+                question: "😘🚀🌟 tere liye?",
+                options: ["Rocket launch 🚀", "You're my star! ⭐", "Kiss goodbye 😢"],
+                correct: 1
+            }
+        ];
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
         }
-      });
-    });
-  });
-</script>
 
+        function startGame1() {
+            showScreen('game1');
+            tapCount = 0;
+            updateTapCount();
+            moveShyBtn();
+        }
+
+        function tapShy(e) {
+            e.preventDefault(); // Prevent any default touch behavior
+            tapCount++;
+            updateTapCount();
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const y = e.touches ? e.touches[0].clientY : e.clientY;
+            createHeart(x, y);
+            if (tapCount >= 3) {
+                alert("Caught you! Ab next game! 😍");
+                startGame2();
+            } else {
+                moveShyBtn();
+            }
+        }
+
+        function updateTapCount() {
+            document.getElementById('tapCount').textContent = tapCount;
+        }
+
+        function moveShyBtn() {
+            const btn = document.getElementById('shyBtn');
+            const x = Math.random() * (window.innerWidth - 140) + 20;
+            const y = Math.random() * (window.innerHeight - 140) + 20;
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'hearts';
+            heart.innerHTML = '💖';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        }
+
+        function startGame2() {
+            showScreen('game2');
+            quizQuestion = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = quizData[quizQuestion];
+            document.getElementById('quizContent').innerHTML = `
+                <p><strong>Q${quizQuestion + 1}:</strong> ${q.question}</p>
+                \( {q.options.map((opt, i) => `<div class="quiz-option" data-index=" \){i}">${opt}</div>`).join('')}
+            `;
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.addEventListener('click', handleQuizClick);
+                opt.addEventListener('touchstart', handleQuizClick);
+            });
+            document.getElementById('nextQuiz').style.display = 'none';
+        }
+
+        function handleQuizClick(e) {
+            e.preventDefault();
+            const index = parseInt(e.currentTarget.dataset.index);
+            const q = quizData[quizQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach((opt, i) => {
+                if (i === q.correct) opt.classList.add('correct');
+                else if (i === index && index !== q.correct) opt.classList.add('wrong');
+            });
+            if (index === q.correct) {
+                alert("Sahiii jawab! 😊");
+            } else {
+                alert("Galat! Par chalega, next! 😂");
+            }
+            document.getElementById('nextQuiz').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            quizQuestion++;
+            if (quizQuestion < quizData.length) {
+                showQuestion();
+            } else {
+                alert("Quiz khatam! Last game shuru! 🔥");
+                startGame3();
+            }
+        }
+
+        function startFrenzy() {
+            frenzyTaps = 0;
+            frenzyTime = 5;
+            updateFrenzy();
+            document.getElementById('frenzyStart').style.display = 'none';
+            document.getElementById('frenzyEnd').style.display = 'block';
+            document.addEventListener('click', countTap);
+            document.addEventListener('touchstart', countTap);
+            frenzyInterval = setInterval(() => {
+                frenzyTime--;
+                updateFrenzy();
+                if (frenzyTime <= 0) {
+                    clearInterval(frenzyInterval);
+                    document.removeEventListener('click', countTap);
+                    document.removeEventListener('touchstart', countTap);
+                    alert(`Wow! ${frenzyTaps} taps! Itna hi toh sochta hoon tujhe roz! 💭😍`);
+                    showScreen('win');
+                    startPetalsRain();
+                }
+            }, 1000);
+        }
+
+        function countTap(e) {
+            e.preventDefault();
+            frenzyTaps++;
+            updateFrenzy();
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const y = e.touches ? e.touches[0].clientY : e.clientY;
+            createHeart(x, y);
+        }
+
+        function updateFrenzy() {
+            document.getElementById('timer').textContent = frenzyTime;
+            document.getElementById('frenzyScore').textContent = frenzyTaps;
+        }
+
+        function startGame3() {
+            showScreen('game3');
+            frenzyTaps = 0;
+            frenzyTime = 5;
+            updateFrenzy();
+            document.getElementById('frenzyStart').style.display = 'block';
+            document.getElementById('frenzyEnd').style.display = 'none';
+        }
+
+        function startPetalsRain() {
+            const petals = document.getElementById('petals');
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const petal = document.createElement('div');
+                    petal.className = 'petal';
+                    petal.style.left = Math.random() * 100 + 'vw';
+                    petal.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    petal.style.animationDelay = Math.random() * 2 + 's';
+                    petals.appendChild(petal);
+                    setTimeout(() => petal.remove(), 6000);
+                }, i * 50);
+            }
+        }
+
+        // Event listeners with both click and touch for full mobile support
+        document.getElementById('startBtn').addEventListener('click', startGame1);
+        document.getElementById('startBtn').addEventListener('touchstart', (e) => { e.preventDefault(); startGame1(); });
+
+        const shyBtn = document.getElementById('shyBtn');
+        shyBtn.addEventListener('click', tapShy);
+        shyBtn.addEventListener('touchstart', tapShy);
+
+        document.getElementById('nextQuiz').addEventListener('click', nextQuestion);
+        document.getElementById('nextQuiz').addEventListener('touchstart', (e) => { e.preventDefault(); nextQuestion(); });
+
+        document.getElementById('frenzyStart').addEventListener('click', startFrenzy);
+        document.getElementById('frenzyStart').addEventListener('touchstart', (e) => { e.preventDefault(); startFrenzy(); });
+
+        document.getElementById('frenzyEnd').addEventListener('click', endFrenzy = () => {
+            clearInterval(frenzyInterval);
+            document.removeEventListener('click', countTap);
+            document.removeEventListener('touchstart', countTap);
+        });
+        document.getElementById('frenzyEnd').addEventListener('touchstart', (e) => { e.preventDefault(); endFrenzy(); });
+    </script>
 </body>
 </html>
