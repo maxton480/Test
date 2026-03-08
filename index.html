@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MHT Image Extractor</title>
+<title>MHT Extractor</title>
 
 <style>
 body{
@@ -13,22 +13,38 @@ text-align:center;
 padding:40px;
 }
 button{
-padding:12px 20px;
+padding:12px 25px;
 font-size:16px;
 margin-top:20px;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <h2>MHT Image Extractor</h2>
 
 <input type="file" id="file" accept=".mht,.mhtml">
 <br>
-<button onclick="extract()">Extract</button>
+<button onclick="extract()">Extract Images</button>
 
 <script>
+
+function base64ToBlob(base64,type){
+
+base64 = base64.replace(/\s+/g,"")
+
+let binary = atob(base64)
+let len = binary.length
+let bytes = new Uint8Array(len)
+
+for(let i=0;i<len;i++){
+bytes[i] = binary.charCodeAt(i)
+}
+
+return new Blob([bytes],{type:type})
+
+}
 
 async function extract(){
 
@@ -47,36 +63,38 @@ boundary="--"+boundary[1]
 
 let parts=text.split(boundary)
 
-let count=1
+let index=1
 
 for(let part of parts){
 
 if(!part.includes("Content-Type: image")) continue
 
-let base64=part.split("\n\n")[1]
-if(!base64) continue
+let typeMatch=part.match(/Content-Type:\s*image\/([^\s;]+)/i)
+if(!typeMatch) continue
 
-base64=base64.trim()
+let type="image/"+typeMatch[1]
 
-let type="jpeg"
-let typeMatch=part.match(/Content-Type:\s*image\/(\w+)/i)
-if(typeMatch) type=typeMatch[1]
+let data=part.split("\n\n")[1]
+if(!data) continue
 
-let data="data:image/"+type+";base64,"+base64
+data=data.trim()
 
-// open new tab
-window.open(data)
+let blob=base64ToBlob(data,type)
+
+let url=URL.createObjectURL(blob)
+
+window.open(url)
 
 let a=document.createElement("a")
-a.href=data
-a.download=String(count).padStart(3,"0")+".webp"
+a.href=url
+a.download=String(index).padStart(3,"0")+"."+typeMatch[1]
 a.click()
 
-count++
+index++
 
 }
 
-alert(count-1+" images extracted")
+alert((index-1)+" images extracted")
 
 }
 
