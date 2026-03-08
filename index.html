@@ -1,44 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rose Day Surprise 🌹</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background: linear-gradient(to bottom, #ff9a9e, #fff0f5);
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #333;
-            text-align: center;
-            touch-action: manipulation;
-        }
-        h1 { color: #c71585; font-size: 2.5em; margin-bottom: 20px; }
-        p { font-size: 1.4em; margin-bottom: 30px; }
-        button {
-            padding: 15px 50px;
-            font-size: 1.5em;
-            background: #ff69b4;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            -webkit-tap-highlight-color: transparent;
-        }
-        button:active { transform: scale(0.95); }
-    </style>
+<meta charset="UTF-8">
+<title>MHT to WEBP Extractor</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<style>
+body{
+background:#0f001f;
+color:#e0e0ff;
+font-family:system-ui;
+text-align:center;
+padding:40px;
+}
+
+button{
+padding:12px 25px;
+font-size:16px;
+margin-top:20px;
+cursor:pointer;
+}
+
+#log{
+margin-top:20px;
+}
+</style>
 </head>
+
 <body>
-    <h1> Hey Meri Rose! 
-           🌹😍</h1>
-    <p>3 mazedaar games khel ke surprise unlock kar!<br>Tap kar shuru karne ke liye!</p>
-    <button onclick="window.location.href='game1.html'">Shuru Karo! 🚀</button>
+
+<h2>MHT → Ordered WEBP Extractor</h2>
+
+<input type="file" id="file" accept=".mht,.mhtml">
+<br>
+<button onclick="extract()">Extract Images</button>
+
+<div id="log"></div>
+
+<script>
+
+async function extract(){
+
+let file = document.getElementById("file").files[0]
+if(!file) return
+
+let text = await file.text()
+
+let regex = /data:image\/(png|jpeg|jpg|webp|gif);base64,([A-Za-z0-9+/=]+)/g
+
+let images=[]
+let match
+
+while(match = regex.exec(text)){
+images.push(match[0])
+}
+
+document.getElementById("log").innerText="Images found: "+images.length
+
+let zip = new JSZip()
+
+for(let i=0;i<images.length;i++){
+
+let img = new Image()
+img.src = images[i]
+
+await new Promise(r=>img.onload=r)
+
+let canvas = document.createElement("canvas")
+canvas.width = img.width
+canvas.height = img.height
+
+let ctx = canvas.getContext("2d")
+ctx.drawImage(img,0,0)
+
+let blob = await new Promise(res=>canvas.toBlob(res,"image/webp",0.95))
+
+let num = String(i+1).padStart(3,"0")
+
+zip.file(num+".webp",blob)
+
+}
+
+let content = await zip.generateAsync({type:"blob"})
+
+let a=document.createElement("a")
+a.href=URL.createObjectURL(content)
+a.download="images.zip"
+a.click()
+
+document.getElementById("log").innerText+="\nDownload ready"
+
+}
+
+</script>
+
 </body>
 </html>
