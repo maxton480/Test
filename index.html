@@ -1,104 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>MHT Extractor</title>
-
-<style>
-body{
-background:#0f001f;
-color:#e0e0ff;
-font-family:system-ui;
-text-align:center;
-padding:40px;
-}
-button{
-padding:12px 25px;
-font-size:16px;
-margin-top:20px;
-}
-</style>
-
+  <meta charset="UTF-8">
+  <title>Comic Image Extractor</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
+  <h2>Comic Image Extractor</h2>
+  <input type="text" id="urlInput" placeholder="Enter comic episode URL">
+  <button onclick="extractImages()">Extract Images</button>
 
-<h2>MHT Image Extractor</h2>
+  <script>
+    async function extractImages() {
+      const url = document.getElementById('urlInput').value;
+      if (!url) {
+        alert('Please enter a URL');
+        return;
+      }
 
-<input type="file" id="file" accept=".mht,.mhtml">
-<br>
-<button onclick="extract()">Extract Images</button>
+      try {
+        const response = await fetch(url);
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
 
-<script>
+        // Find all image elements (adjust selector if needed)
+        const images = doc.querySelectorAll('img');
+        const imageUrls = Array.from(images).map(img => img.src);
 
-function base64ToBlob(base64,type){
+        // Download and zip images
+        const zip = new JSZip();
+        const promises = imageUrls.map(async (src, index) => {
+          const imgResponse = await fetch(src);
+          const blob = await imgResponse.blob();
+          zip.file(`image_${index + 1}.${src.split('.').pop()}`, blob);
+        });
 
-base64 = base64.replace(/\s+/g,"")
-
-let binary = atob(base64)
-let len = binary.length
-let bytes = new Uint8Array(len)
-
-for(let i=0;i<len;i++){
-bytes[i] = binary.charCodeAt(i)
-}
-
-return new Blob([bytes],{type:type})
-
-}
-
-async function extract(){
-
-let file=document.getElementById("file").files[0]
-if(!file) return
-
-let text=await file.text()
-
-let boundary=text.match(/boundary="(.+?)"/i)
-if(!boundary){
-alert("Boundary not found")
-return
-}
-
-boundary="--"+boundary[1]
-
-let parts=text.split(boundary)
-
-let index=1
-
-for(let part of parts){
-
-if(!part.includes("Content-Type: image")) continue
-
-let typeMatch=part.match(/Content-Type:\s*image\/([^\s;]+)/i)
-if(!typeMatch) continue
-
-let type="image/"+typeMatch[1]
-
-let data=part.split("\n\n")[1]
-if(!data) continue
-
-data=data.trim()
-
-let blob=base64ToBlob(data,type)
-
-let url=URL.createObjectURL(blob)
-
-window.open(url)
-
-let a=document.createElement("a")
-a.href=url
-a.download=String(index).padStart(3,"0")+"."+typeMatch[1]
-a.click()
-
-index++
-
-}
-
-alert((index-1)+" images extracted")
-
-}
-
-</script>
-
+        await Promise.all(promises);
+        const content = await zip.generateAsync({type: 'blob'});
+        saveAs(content, 'comic_images.zip');
+      } catch (error) {
+        console.error('Error extracting images:', error);
+        alert('Failed to extract images. Check console for details.');
+      }
+    }
+  </script>
 </body>
 </html>
